@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DJUMPERFORMANCE — Candidature Équipe Technique. Son, image, montage.">
+<meta property="og:title" content="DJUMPERFORMANCE — Candidature Technique">
+<meta property="og:url" content="https://djumperformance.com/candidature-technique.html">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="shortcut icon" href="favicon.ico">
+<title>Candidature Technique — DJUMPERFORMANCE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --gold: #C9A84C; --gold-dim: #8a6e2f; --gold-light: #e8c97a;
+    --star-white: #F0EEE6; --bg: #05060A; --bg2: #0B0D14; --bg3: #0f1119;
+    --text-muted: #7A7D8A;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --mono: 'Space Mono', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--star-white); font-family: var(--serif); min-height: 100vh; overflow-x: hidden; }
+  #star-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 3rem;
+    background: linear-gradient(to bottom, rgba(5,6,10,0.97) 0%, transparent 100%);
+  }
+  .logo { font-family: var(--mono); font-size: 13px; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; font-weight: 700; text-decoration: none; }
+  .nav-back { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 0.8rem; transition: color 0.3s; }
+  .nav-back:hover { color: var(--gold); }
+  .nav-back::before { content: '←'; font-size: 14px; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { width: 24px; height: 1px; background: var(--gold); display: block; }
+  .mobile-menu { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(5,6,10,0.99); flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: var(--mono); font-size: 12px; letter-spacing: 0.3em; color: var(--star-white); text-transform: uppercase; text-decoration: none; transition: color 0.3s; }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--gold); font-size: 1.5rem; cursor: pointer; font-family: var(--mono); }
+
+  /* ── HERO ── */
+  .page-hero {
+    position: relative; z-index: 1;
+    padding: 14rem 3rem 6rem;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end;
+  }
+  .hero-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; display: flex; align-items: center; gap: 1rem; }
+  .hero-eyebrow::before { content: '02'; opacity: 0.4; }
+  .page-title { font-family: var(--serif); font-weight: 300; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; opacity: 0; animation: fadeUp 1s ease 0.4s forwards; }
+  .page-title em { font-style: italic; color: var(--gold); display: block; }
+  .hero-divider { width: 40px; height: 1px; background: var(--gold-dim); margin: 2rem 0; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+  .hero-desc { font-family: var(--serif); font-size: 1rem; line-height: 1.9; color: var(--text-muted); max-width: 420px; opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards; }
+  .hero-right { display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-end; opacity: 0; animation: fadeUp 0.8s ease 1s forwards; }
+  .hero-stat { text-align: right; }
+  .hero-stat-num { font-family: var(--mono); font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .hero-stat-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; margin-top: 0.3rem; }
+  .hero-stat-divider { width: 1px; height: 40px; background: rgba(201,168,76,0.2); align-self: flex-end; }
+
+  /* ── STEPS BAR ── */
+  .steps-bar { position: relative; z-index: 1; border-top: 1px solid rgba(201,168,76,0.1); border-bottom: 1px solid rgba(201,168,76,0.1); background: var(--bg2); }
+  .steps-inner { max-width: 1100px; margin: 0 auto; padding: 0 3rem; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .step { padding: 1.2rem 0 1.2rem 1rem; display: flex; align-items: center; gap: 0.8rem; border-right: 1px solid rgba(201,168,76,0.08); cursor: pointer; transition: background 0.3s; }
+  .step:last-child { border-right: none; }
+  .step.active { background: rgba(201,168,76,0.05); }
+  .step-num { font-family: var(--mono); font-size: 9px; font-weight: 700; color: var(--gold-dim); letter-spacing: 0.1em; width: 22px; height: 22px; border: 1px solid var(--gold-dim); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s; }
+  .step.active .step-num { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+  .step.done .step-num { background: rgba(201,168,76,0.2); color: var(--gold); border-color: var(--gold); }
+  .step-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; transition: color 0.3s; }
+  .step.active .step-label { color: var(--star-white); }
+
+  /* ── FORM ── */
+  .form-container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 5rem 3rem 8rem; }
+  .form-section { display: none; }
+  .form-section.active { display: block; animation: fadeUp 0.5s ease forwards; }
+  .section-heading { margin-bottom: 3rem; }
+  .section-heading .label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 1rem; }
+  .section-heading .label::after { content: ''; flex: 1; height: 1px; background: var(--gold-dim); opacity: 0.2; max-width: 200px; }
+  .section-heading h2 { font-family: var(--serif); font-weight: 300; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.2; }
+  .section-heading h2 em { color: var(--gold); font-style: italic; }
+  .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 3rem; margin-bottom: 2rem; }
+  .fields-grid.single { grid-template-columns: 1fr; }
+  .field { display: flex; flex-direction: column; gap: 0.5rem; }
+  .field.full { grid-column: 1 / -1; }
+  .field-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; }
+  .field-label .required { color: var(--gold-dim); font-size: 11px; }
+  .field-input, .field-select, .field-textarea { background: var(--bg2); border: 1px solid rgba(201,168,76,0.15); color: var(--star-white); font-family: var(--serif); font-size: 1rem; padding: 0.9rem 1rem; outline: none; transition: border-color 0.3s, background 0.3s; width: 100%; appearance: none; }
+  .field-input:focus, .field-select:focus, .field-textarea:focus { border-color: var(--gold); background: rgba(201,168,76,0.03); }
+  .field-input::placeholder, .field-textarea::placeholder { color: var(--text-muted); font-style: italic; }
+  .field-textarea { resize: vertical; min-height: 100px; }
+  .field-select { cursor: pointer; }
+  .field-select option { background: var(--bg2); }
+  .checkbox-group { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 0.3rem; }
+  .checkbox-item { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; }
+  .checkbox-item input[type="checkbox"] { display: none; }
+  .checkbox-box { width: 18px; height: 18px; border: 1px solid rgba(201,168,76,0.3); background: var(--bg2); flex-shrink: 0; position: relative; transition: all 0.2s; cursor: pointer; }
+  .checkbox-item input:checked ~ .checkbox-box { background: var(--gold); border-color: var(--gold); }
+  .checkbox-item input:checked ~ .checkbox-box::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--bg); font-size: 10px; font-weight: 700; font-family: var(--mono); }
+  .checkbox-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; cursor: pointer; }
+
+  /* ── BOUTONS ── */
+  .form-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(201,168,76,0.1); }
+  .btn-prev { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; background: transparent; color: var(--text-muted); border: 1px solid rgba(201,168,76,0.2); cursor: pointer; padding: 0.9rem 1.8rem; text-transform: uppercase; transition: color 0.3s, border-color 0.3s; display: flex; align-items: center; gap: 0.8rem; }
+  .btn-prev:hover { color: var(--star-white); border-color: var(--gold-dim); }
+  .btn-prev::before { content: '←'; }
+  .btn-next { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; background: var(--gold); color: var(--bg); border: none; cursor: pointer; padding: 0.9rem 2.2rem; text-transform: uppercase; font-weight: 700; transition: opacity 0.3s, box-shadow 0.4s, transform 0.2s; display: flex; align-items: center; gap: 0.8rem; }
+  .btn-next:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 0 18px rgba(201,168,76,0.6), 0 0 45px rgba(201,168,76,0.28); }
+  .btn-next::after { content: '→'; }
+  .btn-submit { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; background: var(--gold); color: var(--bg); border: none; cursor: pointer; padding: 0.9rem 2.8rem; text-transform: uppercase; font-weight: 700; transition: opacity 0.3s, box-shadow 0.4s, transform 0.2s; display: flex; align-items: center; gap: 0.8rem; }
+  .btn-submit:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 0 18px rgba(201,168,76,0.6), 0 0 45px rgba(201,168,76,0.28); }
+  .btn-submit::after { content: '★'; }
+  .step-counter { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; }
+  .step-counter span { color: var(--gold); }
+
+  /* ── RECAP ── */
+  .recap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 2rem; }
+  .recap-item { background: var(--bg2); padding: 1.2rem 1.5rem; border: 1px solid rgba(201,168,76,0.08); }
+  .recap-key { font-family: var(--mono); font-size: 8px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.4rem; }
+  .recap-val { font-family: var(--serif); font-size: 1rem; color: var(--star-white); }
+  .recap-val.empty { color: var(--text-muted); font-style: italic; }
+
+  /* ── SUCCESS ── */
+  .success-screen { display: none; text-align: center; padding: 6rem 2rem; }
+  .success-screen.visible { display: block; animation: fadeUp 0.8s ease forwards; }
+  .success-star { font-size: 3rem; margin-bottom: 2rem; animation: pulse 2s ease-in-out infinite; }
+  .success-title { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 1rem; }
+  .success-title em { color: var(--gold); font-style: italic; }
+  .success-sub { font-family: var(--serif); font-size: 1.05rem; color: var(--text-muted); line-height: 1.9; max-width: 500px; margin: 0 auto 3rem; }
+  .success-back { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; background: transparent; color: var(--gold); border: 1px solid var(--gold-dim); cursor: pointer; padding: 0.9rem 2rem; text-transform: uppercase; text-decoration: none; display: inline-block; transition: border-color 0.3s, box-shadow 0.4s; }
+  .success-back:hover { border-color: var(--gold); box-shadow: 0 0 14px rgba(201,168,76,0.35); }
+
+  /* ── FOOTER ── */
+  footer { position: relative; z-index: 1; border-top: 1px solid rgba(201,168,76,0.12); padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; }
+  footer span { color: var(--gold); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .hamburger { display: flex; }
+    .page-hero { grid-template-columns: 1fr; padding: 10rem 1.5rem 3rem; gap: 2rem; }
+    .hero-right { flex-direction: row; align-items: center; justify-content: flex-start; }
+    .steps-inner { grid-template-columns: 1fr 1fr 1fr; }
+    .form-container { padding: 3rem 1.5rem 5rem; }
+    .fields-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+    .recap-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<canvas id="star-canvas"></canvas>
+
+<nav>
+  <a class="logo" href="index.html">DJUMPERFORMANCE</a>
+  <a class="nav-back" href="index.html"><span class="nav-back-text">Retour</span></a>
+  <button class="hamburger" onclick="openMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMenu()">✕</button>
+  <a href="index.html" onclick="closeMenu()">Accueil</a>
+  <a href="index.html#projets" onclick="closeMenu()">Projets</a>
+  <a href="index.html#rejoindre" onclick="closeMenu()">Rejoindre</a>
+  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<div class="page-hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Candidature — Équipe Technique</div>
+    <h1 class="page-title">Construire<br><em>l'image du rêve.</em></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">Son, image, montage, lumière — rejoins une équipe en construction. Chaque discipline technique est la bienvenue.</p>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat"><div class="hero-stat-num">3</div><div class="hero-stat-label">Étapes</div></div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat"><div class="hero-stat-num">~4'</div><div class="hero-stat-label">À remplir</div></div>
+  </div>
+</div>
+
+<div class="steps-bar">
+  <div class="steps-inner">
+    <div class="step active" id="step-tab-1" onclick="goToStep(1)"><div class="step-num">01</div><div class="step-label">Identité</div></div>
+    <div class="step" id="step-tab-2" onclick="goToStep(2)"><div class="step-num">02</div><div class="step-label">Compétences</div></div>
+    <div class="step" id="step-tab-3" onclick="goToStep(3)"><div class="step-num">03</div><div class="step-label">Récapitulatif</div></div>
+  </div>
+</div>
+
+<div class="form-container">
+  <form id="candidature-form" novalidate>
+
+    <!-- ÉTAPE 1 — IDENTITÉ -->
+    <div class="form-section active" id="section-1">
+      <div class="section-heading"><div class="label">Étape 01</div><h2>Qui <em>êtes-vous ?</em></h2></div>
+      <div class="fields-grid">
+        <div class="field"><label class="field-label" for="prenom">Prénom <span class="required">*</span></label><input class="field-input" type="text" id="prenom" name="prenom" placeholder="Votre prénom" required></div>
+        <div class="field"><label class="field-label" for="nom">Nom <span class="required">*</span></label><input class="field-input" type="text" id="nom" name="nom" placeholder="Votre nom" required></div>
+        <div class="field"><label class="field-label" for="email">Email <span class="required">*</span></label><input class="field-input" type="email" id="email" name="email" placeholder="votre@email.com" required></div>
+        <div class="field"><label class="field-label" for="telephone">Téléphone</label><input class="field-input" type="tel" id="telephone" name="telephone" placeholder="+33 6 00 00 00 00"></div>
+        <div class="field"><label class="field-label" for="age">Âge <span class="required">*</span></label><input class="field-input" type="number" id="age" name="age" placeholder="Votre âge" min="16" max="99" required></div>
+        <div class="field"><label class="field-label" for="ville">Ville <span class="required">*</span></label><input class="field-input" type="text" id="ville" name="ville" placeholder="Paris, Lyon..." required></div>
+      </div>
+      <div class="form-nav">
+        <div></div>
+        <div style="display:flex;align-items:center;gap:2rem;"><span class="step-counter">Étape <span>1</span> / 3</span><button type="button" class="btn-next" onclick="nextStep(1)">Suivant</button></div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 2 — COMPÉTENCES -->
+    <div class="form-section" id="section-2">
+      <div class="section-heading"><div class="label">Étape 02</div><h2>Votre <em>spécialité technique.</em></h2></div>
+      <div class="fields-grid">
+        <div class="field"><label class="field-label" for="poste">Poste recherché <span class="required">*</span></label>
+          <select class="field-select" id="poste" name="poste" required>
+            <option value="" disabled selected>Choisir...</option>
+            <option value="image">Directeur·rice de la photographie</option>
+            <option value="camera">Cadreur·euse</option>
+            <option value="son">Ingénieur·e son</option>
+            <option value="montage">Monteur·euse</option>
+            <option value="lumiere">Chef·fe électricien·ne / Lumière</option>
+            <option value="regie">Régisseur·euse</option>
+            <option value="direction">Assistant·e réalisation</option>
+            <option value="script">Script / Continuité</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+        <div class="field"><label class="field-label" for="experience">Niveau d'expérience <span class="required">*</span></label>
+          <select class="field-select" id="experience" name="experience" required>
+            <option value="" disabled selected>Choisir...</option>
+            <option value="debutant">Débutant — Premiers projets</option>
+            <option value="intermediaire">Intermédiaire — Quelques tournages</option>
+            <option value="confirme">Confirmé — Expérience régulière</option>
+            <option value="professionnel">Professionnel — Formation / Carrière</option>
+          </select>
+        </div>
+      </div>
+      <div class="fields-grid single" style="margin-top:0.5rem;">
+        <div class="field"><label class="field-label">Matériel disponible</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item"><input type="checkbox" name="materiel" value="camera"><span class="checkbox-box"></span><span class="checkbox-label">Caméra</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="materiel" value="son"><span class="checkbox-box"></span><span class="checkbox-label">Kit son</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="materiel" value="lumiere"><span class="checkbox-box"></span><span class="checkbox-label">Éclairage</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="materiel" value="stabilisateur"><span class="checkbox-box"></span><span class="checkbox-label">Stabilisateur</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="materiel" value="drone"><span class="checkbox-box"></span><span class="checkbox-label">Drone</span></label>
+            <label class="checkbox-item"><input type="checkbox" name="materiel" value="logiciels"><span class="checkbox-box"></span><span class="checkbox-label">Logiciels montage</span></label>
+          </div>
+        </div>
+      </div>
+      <div class="fields-grid" style="margin-top:1.5rem;">
+        <div class="field"><label class="field-label" for="disponibilite">Disponibilité <span class="required">*</span></label>
+          <select class="field-select" id="disponibilite" name="disponibilite" required>
+            <option value="" disabled selected>Choisir...</option>
+            <option value="immediate">Immédiate</option>
+            <option value="1mois">Dans 1 mois</option>
+            <option value="flexible">Flexible / À discuter</option>
+          </select>
+        </div>
+        <div class="field"><label class="field-label" for="mobilite">Mobilité</label>
+          <select class="field-select" id="mobilite" name="mobilite">
+            <option value="" disabled selected>Choisir...</option>
+            <option value="locale">Ma ville uniquement</option>
+            <option value="regionale">Région parisienne</option>
+            <option value="nationale">France entière</option>
+          </select>
+        </div>
+      </div>
+      <div class="fields-grid single" style="margin-top:1rem;">
+        <div class="field"><label class="field-label" for="portfolio">Portfolio / Showreel (lien)</label><input class="field-input" type="url" id="portfolio" name="portfolio" placeholder="https://vimeo.com/... ou YouTube"></div>
+      </div>
+      <div class="fields-grid single" style="margin-top:1rem;">
+        <div class="field"><label class="field-label" for="message">Message complémentaire</label><textarea class="field-textarea" id="message" name="message" placeholder="Vos outils, vos expériences marquantes, votre vision..."></textarea></div>
+      </div>
+      <div class="form-nav">
+        <button type="button" class="btn-prev" onclick="prevStep(2)">Précédent</button>
+        <div style="display:flex;align-items:center;gap:2rem;"><span class="step-counter">Étape <span>2</span> / 3</span><button type="button" class="btn-next" onclick="nextStep(2)">Récapitulatif</button></div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 3 — RÉCAPITULATIF -->
+    <div class="form-section" id="section-3">
+      <div class="section-heading"><div class="label">Étape 03</div><h2>Vérifiez votre <em>candidature.</em></h2></div>
+      <div class="recap-grid" id="recap-content"></div>
+      <div style="margin-top:3rem;padding:1.5rem 2rem;background:var(--bg2);border:1px solid rgba(201,168,76,0.12);">
+        <label class="checkbox-item" style="gap:1rem;">
+          <input type="checkbox" id="consent" required>
+          <span class="checkbox-box"></span>
+          <span style="font-family:var(--serif);font-size:0.9rem;color:var(--text-muted);line-height:1.7;cursor:pointer;">J'accepte que mes informations soient utilisées par DJUMPERFORMANCE dans le cadre de l'examen de ma candidature. Ces données ne seront pas transmises à des tiers.</span>
+        </label>
+      </div>
+      <div class="form-nav">
+        <button type="button" class="btn-prev" onclick="prevStep(3)">Modifier</button>
+        <div style="display:flex;align-items:center;gap:2rem;"><span class="step-counter">Étape <span>3</span> / 3</span><button type="button" class="btn-submit" onclick="submitForm()">Envoyer ma candidature</button></div>
+      </div>
+    </div>
+  </form>
+
+  <div class="success-screen" id="success-screen">
+    <div class="success-star">★</div>
+    <h2 class="success-title">Candidature<br><em>envoyée.</em></h2>
+    <p class="success-sub">Merci. Nous étudions chaque profil technique avec soin et reviendrons vers vous dans les meilleurs délais.</p>
+    <a class="success-back" href="index.html">← Retour à l'accueil</a>
+  </div>
+</div>
+
+<footer>
+  <div>&copy; 2025 <span>DJUMPERFORMANCE</span> — Tous droits réservés</div>
+  <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;">Candidature Technique — 02 / 03</div>
+</footer>
+
+<script>
+  function openMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // ── MOTEUR ÉTOILES RÉALISTE
+  const canvas = document.getElementById('star-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [], W, H;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function lerp(t, a, b) { return a + t * (b - a); }
+  function grad(hash, x) { return (hash & 1) === 0 ? x : -x; }
+  function initStars() {
+    stars = [];
+    const count = Math.floor((W * H) / 1800);
+    for (let i = 0; i < count; i++) {
+      const rnd = Math.random();
+      stars.push({
+        x: Math.random()*W, y: Math.random()*H,
+        r: rnd < 0.7 ? Math.random()*0.8+0.2 : rnd < 0.92 ? Math.random()*0.8+0.9 : Math.random()*0.6+1.6,
+        f1: Math.random()*0.4+0.05, f2: Math.random()*2.0+0.8, f3: Math.random()*5.0+2.0,
+        p1: Math.random()*100, p2: Math.random()*100, p3: Math.random()*100,
+        a1: Math.random()*0.3+0.1, a2: Math.random()*0.25+0.05, a3: Math.random()*0.12,
+        base: Math.random()*0.25+0.05,
+        flashTimer: Math.random()*800, flashDur: Math.random()*60+20, flashInt: 0,
+        gold: Math.random()<0.07, bright: rnd > 0.88
+      });
+    }
+  }
+  function drawStars(t) {
+    ctx.clearRect(0,0,W,H);
+    for (const s of stars) {
+      const slow = Math.sin(t*s.f1+s.p1)*s.a1;
+      const fast = Math.sin(t*s.f2+s.p2)*s.a2;
+      const micro = Math.sin(t*s.f3+s.p3)*s.a3;
+      s.flashTimer -= 1;
+      if (s.flashTimer <= 0) { s.flashTimer = Math.random()*600+200; s.flashInt = s.bright ? 0.7 : 0.4; s.flashDur = Math.random()*40+10; }
+      let flash = 0;
+      if (s.flashInt > 0) { flash = s.flashInt; s.flashInt -= s.flashInt/s.flashDur; if (s.flashInt < 0.01) s.flashInt = 0; }
+      let a = Math.max(0, Math.min(1, s.base+slow+fast+micro+flash));
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      if (s.gold) {
+        ctx.fillStyle = `rgba(201,168,76,${a})`; ctx.fill();
+        if (a > 0.55 && s.r > 1) { ctx.beginPath(); ctx.arc(s.x,s.y,s.r*3,0,Math.PI*2); ctx.fillStyle = `rgba(201,168,76,${(a-0.55)*0.15})`; ctx.fill(); }
+      } else {
+        ctx.fillStyle = `rgba(240,238,230,${a})`; ctx.fill();
+        if (a > 0.65 && s.r > 1.4) { ctx.beginPath(); ctx.arc(s.x,s.y,s.r*2.8,0,Math.PI*2); ctx.fillStyle = `rgba(240,238,230,${(a-0.65)*0.12})`; ctx.fill(); }
+      }
+    }
+  }
+  function loop(ts) { drawStars(ts*0.001); requestAnimationFrame(loop); }
+  resize(); initStars();
+  window.addEventListener('resize', () => { resize(); initStars(); });
+  requestAnimationFrame(loop);
+
+  // ── GESTION ÉTAPES
+  let currentStep = 1;
+  function goToStep(n) { if (n > currentStep) return; showStep(n); }
+  function showStep(n) {
+    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+    document.getElementById(`section-${n}`).classList.add('active');
+    document.querySelectorAll('.step').forEach((s, i) => { s.classList.remove('active','done'); if (i+1 < n) s.classList.add('done'); if (i+1 === n) s.classList.add('active'); });
+    currentStep = n;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function validateStep(n) {
+    const required = document.getElementById(`section-${n}`).querySelectorAll('[required]');
+    let valid = true;
+    required.forEach(f => { f.style.borderColor = ''; if (!f.value.trim()) { f.style.borderColor = 'rgba(220,80,80,0.6)'; valid = false; } });
+    return valid;
+  }
+  function nextStep(current) { if (!validateStep(current)) return; if (current === 2) buildRecap(); showStep(current + 1); }
+  function prevStep(current) { showStep(current - 1); }
+
+  function buildRecap() {
+    const fields = [
+      { key: 'Prénom', id: 'prenom' }, { key: 'Nom', id: 'nom' }, { key: 'Email', id: 'email' },
+      { key: 'Téléphone', id: 'telephone' }, { key: 'Âge', id: 'age' }, { key: 'Ville', id: 'ville' },
+      { key: 'Poste', id: 'poste' }, { key: 'Expérience', id: 'experience' },
+      { key: 'Disponibilité', id: 'disponibilite' }, { key: 'Mobilité', id: 'mobilite' },
+      { key: 'Portfolio', id: 'portfolio' },
+    ];
+    const materiel = [...document.querySelectorAll('input[name="materiel"]:checked')].map(c => c.value).join(', ');
+    let html = fields.map(f => { const val = document.getElementById(f.id)?.value || ''; return `<div class="recap-item"><div class="recap-key">${f.key}</div><div class="recap-val ${!val?'empty':''}">${val||'—'}</div></div>`; }).join('');
+    if (materiel) html += `<div class="recap-item"><div class="recap-key">Matériel</div><div class="recap-val">${materiel}</div></div>`;
+    const msg = document.getElementById('message').value;
+    if (msg) html += `<div class="recap-item" style="grid-column:1/-1"><div class="recap-key">Message</div><div class="recap-val">${msg}</div></div>`;
+    document.getElementById('recap-content').innerHTML = html;
+  }
+
+  function submitForm() {
+    const consent = document.getElementById('consent');
+    if (!consent.checked) { consent.closest('label').style.outline = '1px solid rgba(220,80,80,0.5)'; return; }
+    // ══ CONNEXION TALLY : form.action = 'https://tally.so/r/TON_ID'; form.method = 'POST'; form.submit();
+    document.getElementById('candidature-form').style.display = 'none';
+    document.getElementById('success-screen').classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

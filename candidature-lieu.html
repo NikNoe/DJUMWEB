@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DJUMPERFORMANCE — Proposer un lieu ou devenir sponsor.">
+<meta property="og:title" content="DJUMPERFORMANCE — Lieu & Sponsor">
+<meta property="og:url" content="https://djumperformance.com/candidature-lieu.html">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="shortcut icon" href="favicon.ico">
+<title>Lieu & Sponsor — DJUMPERFORMANCE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --gold: #C9A84C; --gold-dim: #8a6e2f; --gold-light: #e8c97a;
+    --star-white: #F0EEE6; --bg: #05060A; --bg2: #0B0D14; --bg3: #0f1119;
+    --text-muted: #7A7D8A;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --mono: 'Space Mono', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--star-white); font-family: var(--serif); min-height: 100vh; overflow-x: hidden; }
+  #star-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3rem; background: linear-gradient(to bottom, rgba(5,6,10,0.97) 0%, transparent 100%); }
+  .logo { font-family: var(--mono); font-size: 13px; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; font-weight: 700; text-decoration: none; }
+  .nav-back { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 0.8rem; transition: color 0.3s; }
+  .nav-back:hover { color: var(--gold); }
+  .nav-back::before { content: '←'; font-size: 14px; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { width: 24px; height: 1px; background: var(--gold); display: block; }
+  .mobile-menu { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(5,6,10,0.99); flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: var(--mono); font-size: 12px; letter-spacing: 0.3em; color: var(--star-white); text-transform: uppercase; text-decoration: none; transition: color 0.3s; }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--gold); font-size: 1.5rem; cursor: pointer; font-family: var(--mono); }
+
+  /* ── TYPE SELECTOR ── */
+  .type-selector { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 13rem 3rem 4rem; }
+  .type-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; display: flex; align-items: center; gap: 1rem; }
+  .type-eyebrow::before { content: '03'; opacity: 0.4; }
+  .type-title { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
+  .type-title em { color: var(--gold); font-style: italic; }
+  .type-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+  .type-card { background: var(--bg2); border: 1px solid rgba(201,168,76,0.08); padding: 2.5rem 2rem; cursor: pointer; transition: border-color 0.3s, transform 0.3s, box-shadow 0.4s; position: relative; overflow: hidden; }
+  .type-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+  .type-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-3px); box-shadow: 0 0 20px rgba(201,168,76,0.08); }
+  .type-card:hover::before { transform: scaleX(1); }
+  .type-card.selected { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.05); }
+  .type-card.selected::before { transform: scaleX(1); }
+  .type-card-num { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 1.2rem; display: block; }
+  .type-card h3 { font-family: var(--serif); font-weight: 400; font-size: 1.4rem; margin-bottom: 0.8rem; }
+  .type-card p { font-family: var(--serif); font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+  /* ── FORM ── */
+  .form-container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 2rem 3rem 8rem; display: none; }
+  .form-container.visible { display: block; animation: fadeUp 0.6s ease forwards; }
+  .section-heading { margin-bottom: 3rem; }
+  .section-heading .label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 1rem; }
+  .section-heading .label::after { content: ''; flex: 1; height: 1px; background: var(--gold-dim); opacity: 0.2; max-width: 200px; }
+  .section-heading h2 { font-family: var(--serif); font-weight: 300; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.2; }
+  .section-heading h2 em { color: var(--gold); font-style: italic; }
+  .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 3rem; margin-bottom: 2rem; }
+  .fields-grid.single { grid-template-columns: 1fr; }
+  .field { display: flex; flex-direction: column; gap: 0.5rem; }
+  .field-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; }
+  .field-label .required { color: var(--gold-dim); font-size: 11px; }
+  .field-input, .field-select, .field-textarea { background: var(--bg2); border: 1px solid rgba(201,168,76,0.15); color: var(--star-white); font-family: var(--serif); font-size: 1rem; padding: 0.9rem 1rem; outline: none; transition: border-color 0.3s, background 0.3s; width: 100%; appearance: none; }
+  .field-input:focus, .field-select:focus, .field-textarea:focus { border-color: var(--gold); background: rgba(201,168,76,0.03); }
+  .field-input::placeholder, .field-textarea::placeholder { color: var(--text-muted); font-style: italic; }
+  .field-textarea { resize: vertical; min-height: 120px; }
+  .field-select { cursor: pointer; }
+  .field-select option { background: var(--bg2); }
+  .checkbox-group { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 0.3rem; }
+  .checkbox-item { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; }
+  .checkbox-item input[type="checkbox"] { display: none; }
+  .checkbox-box { width: 18px; height: 18px; border: 1px solid rgba(201,168,76,0.3); background: var(--bg2); flex-shrink: 0; position: relative; transition: all 0.2s; cursor: pointer; }
+  .checkbox-item input:checked ~ .checkbox-box { background: var(--gold); border-color: var(--gold); }
+  .checkbox-item input:checked ~ .checkbox-box::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); color: var(--bg); font-size: 10px; font-weight: 700; font-family: var(--mono); }
+  .checkbox-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; cursor: pointer; }
+  .form-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(201,168,76,0.1); }
+  .btn-back { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; background: transparent; color: var(--text-muted); border: 1px solid rgba(201,168,76,0.2); cursor: pointer; padding: 0.9rem 1.8rem; text-transform: uppercase; transition: color 0.3s, border-color 0.3s; display: flex; align-items: center; gap: 0.8rem; }
+  .btn-back:hover { color: var(--star-white); border-color: var(--gold-dim); }
+  .btn-back::before { content: '←'; }
+  .btn-submit { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; background: var(--gold); color: var(--bg); border: none; cursor: pointer; padding: 0.9rem 2.8rem; text-transform: uppercase; font-weight: 700; transition: opacity 0.3s, box-shadow 0.4s, transform 0.2s; display: flex; align-items: center; gap: 0.8rem; }
+  .btn-submit:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 0 18px rgba(201,168,76,0.6), 0 0 45px rgba(201,168,76,0.28); }
+  .btn-submit::after { content: '★'; }
+
+  /* ── SUCCESS ── */
+  .success-screen { display: none; text-align: center; padding: 6rem 2rem; position: relative; z-index: 1; }
+  .success-screen.visible { display: block; animation: fadeUp 0.8s ease forwards; }
+  .success-star { font-size: 3rem; margin-bottom: 2rem; animation: pulse 2s ease-in-out infinite; }
+  .success-title { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 1rem; }
+  .success-title em { color: var(--gold); font-style: italic; }
+  .success-sub { font-family: var(--serif); font-size: 1.05rem; color: var(--text-muted); line-height: 1.9; max-width: 500px; margin: 0 auto 3rem; }
+  .success-back { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; background: transparent; color: var(--gold); border: 1px solid var(--gold-dim); cursor: pointer; padding: 0.9rem 2rem; text-transform: uppercase; text-decoration: none; display: inline-block; transition: border-color 0.3s, box-shadow 0.4s; }
+  .success-back:hover { border-color: var(--gold); box-shadow: 0 0 14px rgba(201,168,76,0.35); }
+
+  footer { position: relative; z-index: 1; border-top: 1px solid rgba(201,168,76,0.12); padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; }
+  footer span { color: var(--gold); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
+
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .hamburger { display: flex; }
+    .type-selector { padding: 10rem 1.5rem 3rem; }
+    .type-cards { grid-template-columns: 1fr; }
+    .form-container { padding: 2rem 1.5rem 5rem; }
+    .fields-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<canvas id="star-canvas"></canvas>
+
+<nav>
+  <a class="logo" href="index.html">DJUMPERFORMANCE</a>
+  <a class="nav-back" href="index.html"><span>Retour</span></a>
+  <button class="hamburger" onclick="openMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMenu()">✕</button>
+  <a href="index.html" onclick="closeMenu()">Accueil</a>
+  <a href="index.html#projets" onclick="closeMenu()">Projets</a>
+  <a href="index.html#rejoindre" onclick="closeMenu()">Rejoindre</a>
+  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- SÉLECTION DU TYPE -->
+<div class="type-selector" id="type-selector">
+  <div class="type-eyebrow">Soutenir — Support</div>
+  <h1 class="type-title">Comment voulez-vous<br><em>nous soutenir ?</em></h1>
+  <div class="type-cards">
+    <div class="type-card" onclick="selectType('lieu')">
+      <span class="type-card-num">01 — Lieu</span>
+      <h3>Prêter un espace</h3>
+      <p>Vous disposez d'un lieu — appartement, loft, terrain, commerce — et souhaitez le mettre à disposition pour un tournage.</p>
+    </div>
+    <div class="type-card" onclick="selectType('sponsor')">
+      <span class="type-card-num">02 — Sponsor</span>
+      <h3>Devenir partenaire</h3>
+      <p>Marque, entreprise ou particulier — vous souhaitez soutenir financièrement ou matériellement une production DJUMPERFORMANCE.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FORMULAIRE LIEU -->
+<div class="form-container" id="form-lieu">
+  <div class="section-heading"><div class="label">Lieu de tournage</div><h2>Décrivez votre <em>espace.</em></h2></div>
+  <form id="form-lieu-data" novalidate>
+    <div class="fields-grid">
+      <div class="field"><label class="field-label" for="l-prenom">Prénom <span class="required">*</span></label><input class="field-input" type="text" id="l-prenom" name="prenom" placeholder="Votre prénom" required></div>
+      <div class="field"><label class="field-label" for="l-nom">Nom <span class="required">*</span></label><input class="field-input" type="text" id="l-nom" name="nom" placeholder="Votre nom" required></div>
+      <div class="field"><label class="field-label" for="l-email">Email <span class="required">*</span></label><input class="field-input" type="email" id="l-email" name="email" placeholder="votre@email.com" required></div>
+      <div class="field"><label class="field-label" for="l-tel">Téléphone</label><input class="field-input" type="tel" id="l-tel" name="telephone" placeholder="+33 6 00 00 00 00"></div>
+    </div>
+    <div class="fields-grid">
+      <div class="field"><label class="field-label" for="l-type">Type de lieu <span class="required">*</span></label>
+        <select class="field-select" id="l-type" name="type_lieu" required>
+          <option value="" disabled selected>Choisir...</option>
+          <option value="appartement">Appartement / Maison</option>
+          <option value="loft">Loft / Espace industriel</option>
+          <option value="commerce">Commerce / Bureau</option>
+          <option value="exterieur">Espace extérieur</option>
+          <option value="toiture">Toiture / Terrasse</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+      <div class="field"><label class="field-label" for="l-ville">Ville / Adresse <span class="required">*</span></label><input class="field-input" type="text" id="l-ville" name="ville" placeholder="Paris 11e, Vincennes..." required></div>
+    </div>
+    <div class="fields-grid single">
+      <div class="field"><label class="field-label">Caractéristiques</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item"><input type="checkbox" name="caract" value="lumineux"><span class="checkbox-box"></span><span class="checkbox-label">Très lumineux</span></label>
+          <label class="checkbox-item"><input type="checkbox" name="caract" value="grand"><span class="checkbox-box"></span><span class="checkbox-label">Grand volume</span></label>
+          <label class="checkbox-item"><input type="checkbox" name="caract" value="nuit"><span class="checkbox-box"></span><span class="checkbox-label">Disponible la nuit</span></label>
+          <label class="checkbox-item"><input type="checkbox" name="caract" value="parking"><span class="checkbox-box"></span><span class="checkbox-label">Parking</span></label>
+          <label class="checkbox-item"><input type="checkbox" name="caract" value="ascenseur"><span class="checkbox-box"></span><span class="checkbox-label">Ascenseur</span></label>
+        </div>
+      </div>
+    </div>
+    <div class="fields-grid single" style="margin-top:1.5rem;">
+      <div class="field"><label class="field-label" for="l-photos">Photos du lieu (lien Drive / OneDrive)</label><input class="field-input" type="url" id="l-photos" name="photos" placeholder="https://drive.google.com/..."></div>
+    </div>
+    <div class="fields-grid single" style="margin-top:1rem;">
+      <div class="field"><label class="field-label" for="l-message">Description & conditions <span class="required">*</span></label><textarea class="field-textarea" id="l-message" name="message" placeholder="Décrivez l'espace, sa superficie, vos conditions de prêt, vos disponibilités..." required></textarea></div>
+    </div>
+    <div style="margin-top:2rem;padding:1.5rem 2rem;background:var(--bg2);border:1px solid rgba(201,168,76,0.12);">
+      <label class="checkbox-item" style="gap:1rem;">
+        <input type="checkbox" id="l-consent" required>
+        <span class="checkbox-box"></span>
+        <span style="font-family:var(--serif);font-size:0.9rem;color:var(--text-muted);line-height:1.7;cursor:pointer;">J'accepte que mes informations soient utilisées par DJUMPERFORMANCE. Ces données ne seront pas transmises à des tiers.</span>
+      </label>
+    </div>
+    <div class="form-actions">
+      <button type="button" class="btn-back" onclick="resetType()">Changer</button>
+      <button type="button" class="btn-submit" onclick="submitLieu()">Envoyer ma proposition ★</button>
+    </div>
+  </form>
+</div>
+
+<!-- FORMULAIRE SPONSOR -->
+<div class="form-container" id="form-sponsor">
+  <div class="section-heading"><div class="label">Partenariat</div><h2>Votre <em>proposition.</em></h2></div>
+  <form id="form-sponsor-data" novalidate>
+    <div class="fields-grid">
+      <div class="field"><label class="field-label" for="s-nom">Nom / Société <span class="required">*</span></label><input class="field-input" type="text" id="s-nom" name="nom" placeholder="Votre nom ou société" required></div>
+      <div class="field"><label class="field-label" for="s-email">Email <span class="required">*</span></label><input class="field-input" type="email" id="s-email" name="email" placeholder="votre@email.com" required></div>
+      <div class="field"><label class="field-label" for="s-tel">Téléphone</label><input class="field-input" type="tel" id="s-tel" name="telephone" placeholder="+33 6 00 00 00 00"></div>
+      <div class="field"><label class="field-label" for="s-site">Site web / Réseaux</label><input class="field-input" type="url" id="s-site" name="site" placeholder="https://votre-site.com"></div>
+    </div>
+    <div class="fields-grid">
+      <div class="field"><label class="field-label" for="s-type">Type de soutien <span class="required">*</span></label>
+        <select class="field-select" id="s-type" name="type_soutien" required>
+          <option value="" disabled selected>Choisir...</option>
+          <option value="financier">Soutien financier</option>
+          <option value="materiel">Prêt de matériel</option>
+          <option value="service">Prestation de service</option>
+          <option value="visibilite">Échange de visibilité</option>
+          <option value="autre">Autre</option>
+        </select>
+      </div>
+      <div class="field"><label class="field-label" for="s-budget">Budget / Valeur estimée</label>
+        <select class="field-select" id="s-budget" name="budget">
+          <option value="" disabled selected>Choisir...</option>
+          <option value="<500">Moins de 500€</option>
+          <option value="500-2000">500€ – 2 000€</option>
+          <option value="2000-5000">2 000€ – 5 000€</option>
+          <option value=">5000">Plus de 5 000€</option>
+          <option value="nd">Non défini / À discuter</option>
+        </select>
+      </div>
+    </div>
+    <div class="fields-grid single" style="margin-top:1rem;">
+      <div class="field"><label class="field-label" for="s-message">Votre proposition <span class="required">*</span></label><textarea class="field-textarea" id="s-message" name="message" placeholder="Décrivez votre proposition, vos attentes en retour, vos valeurs..." required></textarea></div>
+    </div>
+    <div style="margin-top:2rem;padding:1.5rem 2rem;background:var(--bg2);border:1px solid rgba(201,168,76,0.12);">
+      <label class="checkbox-item" style="gap:1rem;">
+        <input type="checkbox" id="s-consent" required>
+        <span class="checkbox-box"></span>
+        <span style="font-family:var(--serif);font-size:0.9rem;color:var(--text-muted);line-height:1.7;cursor:pointer;">J'accepte que mes informations soient utilisées par DJUMPERFORMANCE. Ces données ne seront pas transmises à des tiers.</span>
+      </label>
+    </div>
+    <div class="form-actions">
+      <button type="button" class="btn-back" onclick="resetType()">Changer</button>
+      <button type="button" class="btn-submit" onclick="submitSponsor()">Envoyer ma proposition ★</button>
+    </div>
+  </form>
+</div>
+
+<!-- SUCCESS -->
+<div class="success-screen" id="success-screen">
+  <div class="success-star">★</div>
+  <h2 class="success-title">Proposition<br><em>envoyée.</em></h2>
+  <p class="success-sub">Merci pour votre soutien. Nous reviendrons vers vous très prochainement pour donner suite à votre proposition.</p>
+  <a class="success-back" href="index.html">← Retour à l'accueil</a>
+</div>
+
+<footer>
+  <div>&copy; 2025 <span>DJUMPERFORMANCE</span> — Tous droits réservés</div>
+  <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;">Lieu & Sponsor — 03 / 03</div>
+</footer>
+
+<script>
+  function openMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // ── MOTEUR ÉTOILES RÉALISTE
+  const canvas = document.getElementById('star-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [], W, H;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function initStars() {
+    stars = [];
+    const count = Math.floor((W * H) / 1800);
+    for (let i = 0; i < count; i++) {
+      const rnd = Math.random();
+      stars.push({
+        x: Math.random()*W, y: Math.random()*H,
+        r: rnd < 0.7 ? Math.random()*0.8+0.2 : rnd < 0.92 ? Math.random()*0.8+0.9 : Math.random()*0.6+1.6,
+        f1: Math.random()*0.4+0.05, f2: Math.random()*2.0+0.8, f3: Math.random()*5.0+2.0,
+        p1: Math.random()*100, p2: Math.random()*100, p3: Math.random()*100,
+        a1: Math.random()*0.3+0.1, a2: Math.random()*0.25+0.05, a3: Math.random()*0.12,
+        base: Math.random()*0.25+0.05,
+        flashTimer: Math.random()*800, flashDur: Math.random()*60+20, flashInt: 0,
+        gold: Math.random()<0.07, bright: rnd > 0.88
+      });
+    }
+  }
+  function drawStars(t) {
+    ctx.clearRect(0,0,W,H);
+    for (const s of stars) {
+      const slow = Math.sin(t*s.f1+s.p1)*s.a1;
+      const fast = Math.sin(t*s.f2+s.p2)*s.a2;
+      const micro = Math.sin(t*s.f3+s.p3)*s.a3;
+      s.flashTimer -= 1;
+      if (s.flashTimer <= 0) { s.flashTimer = Math.random()*600+200; s.flashInt = s.bright ? 0.7 : 0.4; s.flashDur = Math.random()*40+10; }
+      let flash = 0;
+      if (s.flashInt > 0) { flash = s.flashInt; s.flashInt -= s.flashInt/s.flashDur; if (s.flashInt < 0.01) s.flashInt = 0; }
+      let a = Math.max(0, Math.min(1, s.base+slow+fast+micro+flash));
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      if (s.gold) {
+        ctx.fillStyle = `rgba(201,168,76,${a})`; ctx.fill();
+        if (a > 0.55 && s.r > 1) { ctx.beginPath(); ctx.arc(s.x,s.y,s.r*3,0,Math.PI*2); ctx.fillStyle = `rgba(201,168,76,${(a-0.55)*0.15})`; ctx.fill(); }
+      } else {
+        ctx.fillStyle = `rgba(240,238,230,${a})`; ctx.fill();
+        if (a > 0.65 && s.r > 1.4) { ctx.beginPath(); ctx.arc(s.x,s.y,s.r*2.8,0,Math.PI*2); ctx.fillStyle = `rgba(240,238,230,${(a-0.65)*0.12})`; ctx.fill(); }
+      }
+    }
+  }
+  function loop(ts) { drawStars(ts*0.001); requestAnimationFrame(loop); }
+  resize(); initStars();
+  window.addEventListener('resize', () => { resize(); initStars(); });
+  requestAnimationFrame(loop);
+
+  // ── SÉLECTION DU TYPE
+  let selectedType = null;
+  function selectType(type) {
+    selectedType = type;
+    document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+    event.currentTarget.classList.add('selected');
+    setTimeout(() => {
+      document.getElementById('type-selector').style.display = 'none';
+      document.getElementById(`form-${type}`).classList.add('visible');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 300);
+  }
+  function resetType() {
+    document.getElementById('form-lieu').classList.remove('visible');
+    document.getElementById('form-sponsor').classList.remove('visible');
+    document.getElementById('type-selector').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── SOUMISSION
+  function validateForm(formId) {
+    const required = document.getElementById(formId).querySelectorAll('[required]');
+    let valid = true;
+    required.forEach(f => { f.style.borderColor = ''; if (!f.value.trim()) { f.style.borderColor = 'rgba(220,80,80,0.6)'; valid = false; } });
+    return valid;
+  }
+  function showSuccess() {
+    document.getElementById('form-lieu').classList.remove('visible');
+    document.getElementById('form-sponsor').classList.remove('visible');
+    document.getElementById('success-screen').classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function submitLieu() {
+    if (!validateForm('form-lieu-data')) return;
+    // ══ CONNEXION TALLY : form.action = 'https://tally.so/r/TON_ID'; form.method = 'POST'; form.submit();
+    showSuccess();
+  }
+  function submitSponsor() {
+    if (!validateForm('form-sponsor-data')) return;
+    // ══ CONNEXION TALLY : form.action = 'https://tally.so/r/TON_ID'; form.method = 'POST'; form.submit();
+    showSuccess();
+  }
+</script>
+</body>
+</html>
