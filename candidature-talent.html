@@ -326,8 +326,76 @@
   }
   footer span { color: var(--gold); }
 
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
+  /* ══ GRAND MESSAGE ENGAGEMENT ══ */
+  .engagement-message {
+    margin-top: 3rem;
+    padding: 3rem 2.5rem;
+    background: var(--bg2);
+    border: 1px solid rgba(201,168,76,0.2);
+    position: relative; overflow: hidden;
+  }
+  .engagement-message::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0.6;
+  }
+  .engagement-star {
+    font-size: 1.5rem; color: var(--gold); margin-bottom: 1.5rem;
+    display: block; opacity: 0.7;
+    animation: starPulse 3s ease-in-out infinite;
+  }
+  @keyframes starPulse { 0%,100%{opacity:0.4;transform:scale(1)} 50%{opacity:1;transform:scale(1.15)} }
+  .engagement-title {
+    font-family: var(--serif); font-weight: 300;
+    font-size: clamp(1.3rem, 2.5vw, 1.8rem); line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .engagement-title em { color: var(--gold); font-style: italic; }
+  .engagement-body {
+    font-family: var(--serif); font-size: 1rem; color: var(--text-muted);
+    line-height: 1.9; margin-bottom: 1rem;
+  }
+  .engagement-body strong { color: var(--star-white); font-weight: 400; }
+  .engagement-divider {
+    width: 60px; height: 1px; background: var(--gold-dim);
+    margin: 2rem 0; opacity: 0.5;
+  }
+  .engagement-quote {
+    font-family: var(--serif); font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.2rem); color: var(--star-white);
+    line-height: 1.8; margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--gold-dim);
+  }
+  .engagement-quote em { color: var(--gold); }
+  .engagement-sign {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em;
+    color: var(--gold); text-transform: uppercase; margin-top: 0.5rem;
+  }
+
+  /* ══ SABRE + BOUTON SUBMIT ══ */
+  .submit-wrap {
+    position: relative; display: inline-block;
+  }
+  .saber-canvas {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* ══ OVERLAY HYPERESPACE ══ */
+  #hyperspace-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 9999;
+    background: #000;
+    overflow: hidden;
+  }
+  #hyperspace-overlay.active { display: block; }
+  #hyperspace-canvas { position: absolute; inset: 0; }
+
+
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
@@ -358,6 +426,15 @@
 <canvas id="star-canvas"></canvas>
 
 <!-- ── NAV ── -->
+<!-- ══ LOGO DJUM WATERMARK ══ -->
+<div id="djum-watermark" style="position:fixed;bottom:2rem;right:2.5rem;z-index:2;pointer-events:none;opacity:0.08;">
+  <svg style="width:80px;display:block" viewBox="0 0 200 85" xmlns="http://www.w3.org/2000/svg">
+    <text x="12" y="22" font-family="Georgia,serif" font-style="italic" font-size="19" fill="#C9A84C">Just</text>
+    <text x="2" y="68" font-family="Impact,'Arial Black',sans-serif" font-size="52" letter-spacing="3" fill="#F0EEE6">DJUM</text>
+    <text x="8" y="80" font-family="Arial,sans-serif" font-size="8.5" letter-spacing="5" fill="#C9A84C">PERFORMANCE</text>
+  </svg>
+</div>
+
 <nav>
   <a class="logo" href="index.html">DJUMPERFORMANCE</a>
   <a class="nav-back" href="index.html">
@@ -665,36 +742,44 @@
         <h2>Vérifiez votre <em>candidature.</em></h2>
       </div>
 
-      <div class="recap-grid" id="recap-content">
-        <!-- Rempli par JS -->
+      <div class="recap-grid" id="recap-content"></div>
+
+      <!-- ══ GRAND MESSAGE ENGAGEMENT ══ -->
+      <div class="engagement-message">
+        <div class="engagement-star">✦</div>
+        <h3 class="engagement-title">Avant d'envoyer — <em>quelques mots importants.</em></h3>
+        <p class="engagement-body">
+          DJUMPERFORMANCE est une maison de production <strong>indépendante et non commerciale</strong> à ce stade de son développement. Les projets auxquels vous participez ne sont <strong>pas rémunérés financièrement.</strong>
+        </p>
+        <p class="engagement-body">
+          Ce que nous offrons à la place est, à nos yeux, d'une valeur bien supérieure : <strong>l'expérience d'un tournage cinématographique réel</strong>, une œuvre qui vous appartient autant qu'à nous, et la chance de faire partie d'une aventure qui grandit.
+        </p>
+        <div class="engagement-divider"></div>
+        <p class="engagement-quote">
+          « La seule rémunération sérieuse que nous pouvons vous promettre, c'est <em>l'amour du cinéma, la passion de créer, et la fierté d'avoir osé.</em> Si vous êtes là pour ça — alors vous êtes exactement là où vous devez être. »
+        </p>
+        <p class="engagement-sign">— DJUMPERFORMANCE</p>
       </div>
 
-      <div style="margin-top:3rem; padding:1.5rem 2rem; background:var(--bg2); border:1px solid rgba(201,168,76,0.12);">
+      <div style="margin-top:2rem; padding:1.5rem 2rem; background:var(--bg2); border:1px solid rgba(201,168,76,0.12);">
         <label class="checkbox-item" style="gap:1rem;">
           <input type="checkbox" id="consent" required>
           <span class="checkbox-box"></span>
           <span style="font-family:var(--serif); font-size:0.9rem; color:var(--text-muted); line-height:1.7; cursor:pointer;">
-            J'accepte que mes informations soient utilisées par DJUMPERFORMANCE dans le cadre de l'examen de ma candidature. Ces données ne seront pas transmises à des tiers.
+            J'ai lu et j'accepte les conditions de participation. Je comprends que ce projet est non rémunéré et j'y adhère librement, par amour du cinéma.
           </span>
         </label>
       </div>
-
-      <!-- 
-        ════════════════════════════════════════════════════
-        CONNEXION TALLY — À faire quand tu as ton compte :
-        
-        1. Crée ton formulaire sur tally.so
-        2. Récupère l'ID dans l'URL : tally.so/r/XXXX
-        3. Remplace action="#" par action="https://tally.so/r/XXXX"
-        4. Ajoute method="POST" sur le <form> en haut
-        ════════════════════════════════════════════════════
-      -->
 
       <div class="form-nav">
         <button type="button" class="btn-prev" onclick="prevStep(4)">Modifier</button>
         <div style="display:flex; align-items:center; gap:2rem;">
           <span class="step-counter">Étape <span>4</span> / 4</span>
-          <button type="button" class="btn-submit" onclick="submitForm()">Envoyer ma candidature</button>
+          <!-- Bouton avec canvas sabre lumineux -->
+          <div class="submit-wrap" id="submit-wrap">
+            <canvas class="saber-canvas" id="saber-canvas"></canvas>
+            <button type="button" class="btn-submit" id="btn-submit" onclick="submitForm()">Envoyer ma candidature</button>
+          </div>
         </div>
       </div>
     </div>
@@ -703,13 +788,24 @@
 
   <!-- SUCCESS -->
   <div class="success-screen" id="success-screen">
-    <div class="success-star">★</div>
+    <div class="success-logo" id="success-logo">
+      <svg viewBox="0 0 320 130" xmlns="http://www.w3.org/2000/svg" style="width:220px;display:block;margin:0 auto 2rem;">
+        <text x="20" y="30" font-family="Georgia,serif" font-style="italic" font-size="26" fill="#C9A84C" id="sl-just">Just</text>
+        <text x="4" y="105" font-family="Impact,'Arial Black',sans-serif" font-size="82" letter-spacing="4" fill="#F0EEE6" id="sl-djum">DJUM</text>
+        <text x="12" y="122" font-family="Arial,sans-serif" font-size="11" letter-spacing="6.5" fill="#C9A84C" id="sl-perf">PERFORMANCE</text>
+      </svg>
+    </div>
     <h2 class="success-title">Candidature<br><em>envoyée.</em></h2>
     <p class="success-sub">
       Merci pour votre confiance. Nous étudions chaque candidature avec soin et reviendrons vers vous dans les meilleurs délais.
     </p>
     <a class="success-back" href="index.html">← Retour à l'accueil</a>
   </div>
+</div>
+
+<!-- ══ OVERLAY HYPERESPACE ══ -->
+<div id="hyperspace-overlay">
+  <canvas id="hyperspace-canvas"></canvas>
 </div>
 
 <!-- ── FOOTER ── -->
@@ -779,6 +875,10 @@
   window.addEventListener('resize', () => { resize(); initStars(); });
   requestAnimationFrame(loop);
 
+
+  // ══ WATERMARK SCINTILLEMENT ══
+  const wmEl=document.getElementById('djum-watermark');
+  let wmT2=0; function animWM(){wmT2+=0.007;wmEl.style.opacity=(0.06+Math.sin(wmT2)*0.025).toFixed(3);requestAnimationFrame(animWM);} animWM();
   // ── GESTION ÉTAPES
   let currentStep = 1;
   const totalSteps = 4;
@@ -872,30 +972,157 @@
     document.getElementById('recap-content').innerHTML = html;
   }
 
-  // ── SOUMISSION
+  // ── SOUMISSION AVEC ANIMATION
   function submitForm() {
     const consent = document.getElementById('consent');
     if (!consent.checked) {
       consent.closest('label').style.outline = '1px solid rgba(220,80,80,0.5)';
       return;
     }
+    // 1. Sabre lumineux autour du bouton
+    launchSaber(() => {
+      // 2. Hyperespace sur toute la page, puis succès
+      launchHyperspace(() => {
+        document.getElementById('candidature-form').style.display = 'none';
+        document.getElementById('success-screen').classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // ══ CONNEXION TALLY : form.action = 'https://tally.so/r/TON_ID'; form.method = 'POST'; form.submit();
+      });
+    });
+  }
 
-    /*
-      ══ CONNEXION TALLY ══
-      Quand tu as ton ID Tally, remplace ce bloc par :
+  // ══ ANIMATION 1 : SABRE LUMINEUX autour du bouton ══
+  function launchSaber(onComplete) {
+    const btn = document.getElementById('btn-submit');
+    const sc = document.getElementById('saber-canvas');
+    const rect = btn.getBoundingClientRect();
+    const pad = 10;
+    const W = rect.width + pad*2;
+    const H = rect.height + pad*2;
+    sc.width = W; sc.height = H;
+    sc.style.width = W+'px'; sc.style.height = H+'px';
+    const ctx = sc.getContext('2d');
+    const perimeter = 2*(W+H);
+    let progress = 0;
+    const duration = 900; // ms
+    let start = null;
 
-      const form = document.getElementById('candidature-form');
-      form.action = 'https://tally.so/r/TON_ID';
-      form.method = 'POST';
-      form.submit();
+    function drawSaber(t) {
+      if (!start) start = t;
+      const elapsed = t - start;
+      progress = Math.min(elapsed / duration, 1);
+      const dist = progress * perimeter;
 
-      En attendant, on affiche l'écran de succès :
-    */
+      ctx.clearRect(0,0,W,H);
 
-    document.getElementById('candidature-form').style.display = 'none';
-    const success = document.getElementById('success-screen');
-    success.classList.add('visible');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Trail effect : plusieurs passes avec opacité décroissante
+      for (let trail = 3; trail >= 0; trail--) {
+        const trailProgress = Math.max(0, progress - trail * 0.07);
+        const trailDist = trailProgress * perimeter;
+        const opacity = (1 - trail/4) * (trail === 0 ? 1 : 0.4);
+        const lineWidth = trail === 0 ? 3 : 1.5 - trail*0.3;
+
+        ctx.beginPath();
+        ctx.strokeStyle = trail === 0 ? `rgba(201,168,76,${opacity})` : `rgba(240,220,150,${opacity})`;
+        ctx.lineWidth = lineWidth;
+        ctx.shadowBlur = trail === 0 ? 12 : 0;
+        ctx.shadowColor = 'rgba(201,168,76,0.8)';
+        ctx.lineCap = 'round';
+
+        // Trace le périmètre jusqu'à trailDist
+        let d = trailDist;
+        ctx.moveTo(pad, pad);
+        if (d <= W) { ctx.lineTo(pad+d, pad); }
+        else { ctx.lineTo(W-pad+pad, pad); d -= W;
+          if (d <= H) { ctx.lineTo(W-pad+pad, pad+d); }
+          else { ctx.lineTo(W-pad+pad, H-pad+pad); d -= H;
+            if (d <= W) { ctx.lineTo(W-pad+pad-d, H-pad+pad); }
+            else { ctx.lineTo(pad, H-pad+pad); d -= W;
+              if (d > 0) ctx.lineTo(pad, H-pad+pad - Math.min(d,H));
+            }
+          }
+        }
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(drawSaber);
+      } else {
+        // Flash final
+        ctx.clearRect(0,0,W,H);
+        ctx.strokeStyle = 'rgba(240,220,150,0.9)';
+        ctx.lineWidth = 2; ctx.shadowBlur = 20; ctx.shadowColor = 'rgba(201,168,76,1)';
+        ctx.strokeRect(pad, pad, W-pad*2, H-pad*2);
+        ctx.shadowBlur = 0;
+        setTimeout(() => {
+          // Fade out saber
+          let alpha = 1;
+          const fade = setInterval(() => {
+            alpha -= 0.08;
+            ctx.clearRect(0,0,W,H);
+            if (alpha > 0) {
+              ctx.globalAlpha = alpha;
+              ctx.strokeStyle = 'rgba(201,168,76,1)';
+              ctx.lineWidth = 2;
+              ctx.strokeRect(pad, pad, W-pad*2, H-pad*2);
+              ctx.globalAlpha = 1;
+            } else {
+              clearInterval(fade);
+              ctx.clearRect(0,0,W,H);
+              onComplete();
+            }
+          }, 30);
+        }, 200);
+      }
+    }
+    requestAnimationFrame(drawSaber);
+  }
+
+  // ══ ANIMATION 2 : HYPERESPACE ══
+  function launchHyperspace(onComplete) {
+    const overlay=document.getElementById('hyperspace-overlay'),hc=document.getElementById('hyperspace-canvas');
+    overlay.classList.add('active');let W=hc.width=window.innerWidth,H=hc.height=window.innerHeight;
+    const ctx=hc.getContext('2d'),cx=W/2,cy=H/2,streaks=[];
+    for(let i=0;i<320;i++){const a=Math.random()*Math.PI*2,sp=Math.random()*14+5,d=Math.random()*90+20;streaks.push({angle:a,speed:sp,dist:d,length:0,maxLen:Math.random()*220+60,alpha:Math.random()*0.55+0.3,gold:Math.random()<0.1});}
+    let phase='accel',fc=0;
+    // Logo DJUM au centre - dessiné sur canvas
+    function drawLogo(alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.textAlign = 'center';
+      // "Just" script
+      ctx.font = 'italic 28px Georgia, serif';
+      ctx.fillStyle = '#C9A84C';
+      ctx.fillText('Just', cx - 10, cy - 38);
+      // "DJUM"
+      ctx.font = 'bold 90px Impact, Arial Black, sans-serif';
+      ctx.letterSpacing = '4px';
+      ctx.fillStyle = '#F0EEE6';
+      ctx.shadowBlur = 30; ctx.shadowColor = 'rgba(240,238,230,0.5)';
+      ctx.fillText('DJUM', cx + 2, cy + 30);
+      ctx.shadowBlur = 0;
+      // "PERFORMANCE"
+      ctx.font = '11px Arial, sans-serif';
+      ctx.letterSpacing = '6px';
+      ctx.fillStyle = '#C9A84C';
+      ctx.fillText('PERFORMANCE', cx + 2, cy + 52);
+      ctx.restore();
+    }
+    function draw(){
+      fc++;
+      ctx.fillStyle='rgba(0,0,0,0.14)'; ctx.fillRect(0,0,W,H);
+      let gs=phase==='accel'?fc/40*3:phase==='hold'?3:3*(1-fc/25);
+      for(const s of streaks){s.length=Math.min(s.length+gs*s.speed*0.4,s.maxLen);const x1=cx+Math.cos(s.angle)*s.dist,y1=cy+Math.sin(s.angle)*s.dist,x2=cx+Math.cos(s.angle)*(s.dist+s.length*gs*0.5),y2=cy+Math.sin(s.angle)*(s.dist+s.length*gs*0.5);ctx.beginPath();const g=ctx.createLinearGradient(x1,y1,x2,y2),col=s.gold?'201,168,76':'240,238,230';g.addColorStop(0,`rgba(${col},0)`);g.addColorStop(1,`rgba(${col},${s.alpha})`);ctx.strokeStyle=g;ctx.lineWidth=s.gold?1.5:1;ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
+      // Logo au centre avec alpha progressif
+      const logoAlpha = phase==='accel' ? fc/40*0.9 : phase==='hold' ? 0.9 : 0.9*(1-fc/25);
+      drawLogo(Math.min(logoAlpha,0.9));
+      if(phase==='accel'&&fc>=40){phase='hold';fc=0;}
+      else if(phase==='hold'&&fc>=30){phase='fade';fc=0;}
+      else if(phase==='fade'&&fc>=25){overlay.classList.remove('active');ctx.clearRect(0,0,W,H);onComplete();return;}
+      requestAnimationFrame(draw);
+    }
+    ctx.fillStyle='#000'; ctx.fillRect(0,0,W,H); requestAnimationFrame(draw);
   }
 </script>
 </body>
