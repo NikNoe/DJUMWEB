@@ -8,10 +8,15 @@
 <meta property="og:title" content="DJUMPERFORMANCE">
 <meta property="og:description" content="La performance d'un rêve — Maison de production indépendante">
 <meta property="og:url" content="https://djumperformance.com">
+<meta property="og:image" content="https://djumperformance.com/assets/images/og-cover.jpg">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+<!-- ══ FAVICON ══ -->
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
 <link rel="shortcut icon" href="favicon.ico">
+
 <title>DJUMPERFORMANCE — La performance d'un rêve</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,9 +66,12 @@
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
     color: var(--bg); background: var(--gold); border: none; cursor: pointer;
     padding: 0.65rem 1.4rem; text-transform: uppercase; font-weight: 700;
-    text-decoration: none; transition: opacity 0.3s; display: inline-block;
+    text-decoration: none; transition: opacity 0.3s, box-shadow 0.4s, transform 0.2s; display: inline-block;
   }
-  .nav-cta:hover { opacity: 0.85; }
+  .nav-cta:hover {
+    opacity: 0.92; transform: translateY(-1px);
+    box-shadow: 0 0 14px rgba(201,168,76,0.55), 0 0 32px rgba(201,168,76,0.22);
+  }
 
   /* ─── HAMBURGER ─── */
   .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
@@ -126,18 +134,25 @@
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
     background: var(--gold); color: var(--bg); border: none; cursor: pointer;
     padding: 1rem 2.2rem; text-transform: uppercase; font-weight: 700;
-    text-decoration: none; display: inline-block; transition: opacity 0.3s;
+    text-decoration: none; display: inline-block;
+    transition: opacity 0.3s, box-shadow 0.4s, transform 0.2s;
   }
-  .btn-primary:hover { opacity: 0.85; }
+  .btn-primary:hover {
+    opacity: 0.92; transform: translateY(-1px);
+    box-shadow: 0 0 18px rgba(201,168,76,0.6), 0 0 45px rgba(201,168,76,0.28), 0 0 90px rgba(201,168,76,0.12);
+  }
   .btn-secondary {
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
     background: transparent; color: var(--gold);
     border: 1px solid var(--gold-dim); cursor: pointer;
     padding: 1rem 2.2rem; text-transform: uppercase;
     text-decoration: none; display: inline-block;
-    transition: border-color 0.3s, color 0.3s;
+    transition: border-color 0.3s, color 0.3s, box-shadow 0.4s, transform 0.2s;
   }
-  .btn-secondary:hover { border-color: var(--gold); color: var(--star-white); }
+  .btn-secondary:hover {
+    border-color: var(--gold); color: var(--star-white); transform: translateY(-1px);
+    box-shadow: 0 0 14px rgba(201,168,76,0.4), 0 0 38px rgba(201,168,76,0.18);
+  }
   .scroll-hint {
     position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
     font-family: var(--mono); font-size: 9px; letter-spacing: 0.3em;
@@ -198,7 +213,6 @@
     color: rgba(201,168,76,0.3); text-transform: uppercase;
     text-align: center;
   }
-  /* Remplace .projet-thumb par une vraie image : <img src="assets/images/projet1.jpg"> */
   .projet-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
   .projet-card:hover .projet-thumb img { transform: scale(1.04); }
   .projet-info { padding: 1.5rem; }
@@ -261,15 +275,24 @@
   .contact-info h2 { font-family: var(--serif); font-weight: 300; font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.2; margin-bottom: 1.5rem; }
   .contact-info h2 em { color: var(--gold); font-style: italic; }
   .contact-info p { font-family: var(--serif); font-size: 1rem; color: var(--text-muted); line-height: 1.9; margin-bottom: 2rem; }
-  .social-links { display: flex; flex-direction: column; gap: 0.8rem; }
+  /* ─── SOCIAL LINKS ─── */
+  .social-links { display: flex; flex-direction: column; gap: 0.6rem; }
   .social-link {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
     color: var(--text-muted); text-decoration: none; text-transform: uppercase;
-    display: flex; align-items: center; gap: 1rem; transition: color 0.3s;
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(201,168,76,0.08);
+    background: var(--bg2);
+    transition: color 0.3s, border-color 0.3s, background 0.3s, box-shadow 0.4s, transform 0.2s;
   }
-  .social-link::before { content: ''; width: 20px; height: 1px; background: var(--gold-dim); transition: width 0.3s; }
-  .social-link:hover { color: var(--gold); }
-  .social-link:hover::before { width: 40px; }
+  .social-link:hover {
+    color: var(--gold); border-color: rgba(201,168,76,0.35);
+    background: rgba(201,168,76,0.04); transform: translateX(4px);
+    box-shadow: 0 0 12px rgba(201,168,76,0.2), inset 0 0 20px rgba(201,168,76,0.03);
+  }
+  .social-icon { width: 15px; height: 15px; flex-shrink: 0; color: var(--gold-dim); transition: color 0.3s; }
+  .social-link:hover .social-icon { color: var(--gold); }
 
   /* ─── FORMULAIRE CONTACT ─── */
   .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
@@ -288,9 +311,12 @@
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
     background: var(--gold); color: var(--bg); border: none; cursor: pointer;
     padding: 1rem 2rem; text-transform: uppercase; font-weight: 700;
-    align-self: flex-start; transition: opacity 0.3s;
+    align-self: flex-start; transition: opacity 0.3s, box-shadow 0.4s, transform 0.2s;
   }
-  .form-submit:hover { opacity: 0.85; }
+  .form-submit:hover {
+    opacity: 0.92; transform: translateY(-1px);
+    box-shadow: 0 0 16px rgba(201,168,76,0.55), 0 0 40px rgba(201,168,76,0.22);
+  }
 
   /* ─── FOOTER ─── */
   footer {
@@ -420,7 +446,6 @@
     <div class="section-label">Projets — Projects</div>
     <div class="projets-grid">
 
-      <!-- PROJET 1 — En cours (remplace le placeholder par une vraie image) -->
       <div class="projet-card">
         <div class="projet-thumb">
           <!-- <img src="assets/images/projet1.jpg" alt="Projet en cours"> -->
@@ -436,7 +461,6 @@
         </div>
       </div>
 
-      <!-- PROJET 2 — Placeholder -->
       <div class="projet-card">
         <div class="projet-thumb">
           <!-- <img src="assets/images/projet2.jpg" alt="Projet 2"> -->
@@ -452,7 +476,6 @@
         </div>
       </div>
 
-      <!-- PROJET 3 — Placeholder -->
       <div class="projet-card">
         <div class="projet-thumb">
           <div class="projet-thumb-placeholder">
@@ -555,11 +578,39 @@
         <h2>Parlons de<br><em>votre projet.</em></h2>
         <p>Pour toute question, collaboration ou prise de contact directe — écrivez-nous. Chaque message est lu.</p>
         <div class="social-links">
-          <!-- Remplace les # par tes vrais liens -->
-          <a class="social-link" href="https://www.instagram.com/justdjum?igsh=Z2FhcDdwaHFiNHlj" target="_blank">Instagram</a>
-          <a class="social-link" href="https://youtube.com/@djumperformance?si=x1jL27dJNmTPMySI" target="_blank">YouTube</a>
-          <a class="social-link" href="https://www.tiktok.com/@djumperformance?_r=1&_t=ZN-95VSk4CAZwE" target="_blank">TikTok</a>
-          <a class="social-link" href="mailto:contact@djumperformance.com">contact@djumperformance.com</a>
+
+          <a class="social-link" href="https://www.instagram.com/justdjum?igsh=Z2FhcDdwaHFiNHlj" target="_blank" rel="noopener">
+            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5.5"/>
+              <circle cx="12" cy="12" r="4.5"/>
+              <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+            </svg>
+            Instagram
+          </a>
+
+          <a class="social-link" href="https://youtube.com/@djumperformance?si=x1jL27dJNmTPMySI" target="_blank" rel="noopener">
+            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="5" width="20" height="14" rx="4"/>
+              <path d="M10 9.5L15 12L10 14.5V9.5Z" fill="currentColor" stroke="none"/>
+            </svg>
+            YouTube
+          </a>
+
+          <a class="social-link" href="https://www.tiktok.com/@djumperformance?_r=1&_t=ZN-95VSk4CAZwE" target="_blank" rel="noopener">
+            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+            </svg>
+            TikTok
+          </a>
+
+          <a class="social-link" href="mailto:contact@djumperformance.com">
+            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="5" width="20" height="14" rx="3"/>
+              <path d="M2 8l10 7 10-7"/>
+            </svg>
+            contact@djumperformance.com
+          </a>
+
         </div>
       </div>
       <form
@@ -567,7 +618,6 @@
         action="https://formspree.io/f/VOTRE_ID_FORMSPREE"
         method="POST"
       >
-        <!-- Remplace VOTRE_ID_FORMSPREE par ton ID après inscription sur formspree.io -->
         <div class="form-group">
           <label class="form-label" for="nom">Nom complet</label>
           <input class="form-input" type="text" id="nom" name="nom" placeholder="Votre nom" required>
@@ -618,17 +668,48 @@
     H = canvas.height = window.innerHeight;
   }
 
+  // ── Bruit de Perlin simplifié pour scintillement organique
+  function noise(x) {
+    const X = Math.floor(x) & 255;
+    x -= Math.floor(x);
+    const u = x * x * x * (x * (x * 6 - 15) + 10);
+    return lerp(u, grad(X, x), grad(X + 1, x - 1));
+  }
+  function lerp(t, a, b) { return a + t * (b - a); }
+  function grad(hash, x) { return (hash & 1) === 0 ? x : -x; }
+
   function initStars() {
     stars = [];
-    const count = Math.floor((W * H) / 4000);
+    const count = Math.floor((W * H) / 1800);
     for (let i = 0; i < count; i++) {
+      const rnd = Math.random();
       stars.push({
         x: Math.random() * W,
         y: Math.random() * H,
-        r: Math.random() * 1.4 + 0.2,
-        speed: Math.random() * 0.008 + 0.003,
-        offset: Math.random() * Math.PI * 2,
-        gold: Math.random() < 0.06
+        // Tailles variées : petites majoritaires, quelques grandes
+        r: rnd < 0.7 ? Math.random() * 0.8 + 0.2
+           : rnd < 0.92 ? Math.random() * 0.8 + 0.9
+           : Math.random() * 0.6 + 1.6,
+        // Chaque étoile a plusieurs fréquences de scintillement superposées
+        f1: Math.random() * 0.4 + 0.05,   // fréquence lente
+        f2: Math.random() * 2.0 + 0.8,    // fréquence rapide
+        f3: Math.random() * 5.0 + 2.0,    // micro-turbulence
+        p1: Math.random() * 100,
+        p2: Math.random() * 100,
+        p3: Math.random() * 100,
+        // Amplitude de chaque couche
+        a1: Math.random() * 0.3 + 0.1,
+        a2: Math.random() * 0.25 + 0.05,
+        a3: Math.random() * 0.12,
+        // Luminosité de base (certaines étoiles sont naturellement plus sombres)
+        base: Math.random() * 0.25 + 0.05,
+        // Flash spontané aléatoire
+        flashTimer: Math.random() * 800,
+        flashDur: Math.random() * 60 + 20,
+        flashInt: 0,
+        // Type
+        gold: Math.random() < 0.07,
+        bright: rnd > 0.88
       });
     }
   }
@@ -636,17 +717,60 @@
   function drawStars(t) {
     ctx.clearRect(0, 0, W, H);
     for (const s of stars) {
-      const a = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(t * s.speed + s.offset));
+      // Scintillement multi-couches irrégulier
+      const slow  = Math.sin(t * s.f1 + s.p1) * s.a1;
+      const fast  = Math.sin(t * s.f2 + s.p2) * s.a2;
+      const micro = Math.sin(t * s.f3 + s.p3) * s.a3;
+
+      // Flash spontané : déclenché aléatoirement, durée courte
+      s.flashTimer -= 1;
+      if (s.flashTimer <= 0) {
+        s.flashTimer = Math.random() * 600 + 200;
+        s.flashInt = s.bright ? 0.7 : 0.4;
+        s.flashDur = Math.random() * 40 + 10;
+      }
+      let flash = 0;
+      if (s.flashInt > 0) {
+        flash = s.flashInt;
+        s.flashInt -= s.flashInt / s.flashDur;
+        if (s.flashInt < 0.01) s.flashInt = 0;
+      }
+
+      let a = Math.max(0, Math.min(1, s.base + slow + fast + micro + flash));
+
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = s.gold
-        ? `rgba(201,168,76,${a * 0.85})`
-        : `rgba(240,238,230,${a})`;
-      ctx.fill();
+
+      if (s.gold) {
+        ctx.fillStyle = `rgba(201,168,76,${a})`;
+        ctx.fill();
+        // Halo doré sur les étoiles brillantes
+        if (a > 0.55 && s.r > 1) {
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r * 3, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(201,168,76,${(a - 0.55) * 0.15})`;
+          ctx.fill();
+        }
+      } else {
+        ctx.fillStyle = `rgba(240,238,230,${a})`;
+        ctx.fill();
+        // Halo blanc sur les grandes étoiles très brillantes
+        if (a > 0.65 && s.r > 1.4) {
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r * 2.8, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(240,238,230,${(a - 0.65) * 0.12})`;
+          ctx.fill();
+        }
+      }
     }
   }
 
-  function loop(t) { drawStars(t / 100); requestAnimationFrame(loop); }
+  let lastT = 0;
+  function loop(ts) {
+    const t = ts * 0.001; // secondes
+    drawStars(t);
+    requestAnimationFrame(loop);
+  }
 
   resize();
   initStars();
