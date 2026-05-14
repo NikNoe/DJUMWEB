@@ -420,6 +420,7 @@
     footer { flex-direction: column; gap: 1rem; text-align: center; }
   }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -817,6 +818,8 @@
 </footer>
 
 <script>
+  emailjs.init({ publicKey: 'xRpuCjl2EzAsn1xKN' });
+
   // ── Menu mobile
   function openMenu() { document.getElementById('mobileMenu').classList.add('open'); }
   function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
@@ -973,20 +976,75 @@
   }
 
   // ── SOUMISSION AVEC ANIMATION
-  function submitForm() {
+  async function submitForm() {
     const consent = document.getElementById('consent');
     if (!consent.checked) {
       consent.closest('label').style.outline = '1px solid rgba(220,80,80,0.5)';
       return;
     }
-    // 1. Sabre lumineux autour du bouton
+
+    const get = (id) => document.getElementById(id)?.value?.trim() || '';
+    const disciplines = [...document.querySelectorAll('input[name="disciplines"]:checked')].map(c => c.value).join(', ');
+    const jours = [...document.querySelectorAll('input[name="jours"]:checked')].map(c => c.value).join(', ');
+    const date = new Date().toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+
+    const data = {
+      prenom: get('prenom'), nom: get('nom'), email: get('email'),
+      telephone: get('telephone'), age: get('age'), ville: get('ville'),
+      instagram: get('instagram'), tiktok: get('tiktok'),
+      experience: get('experience'), formation: get('formation'),
+      disciplines, langues: get('langues'), biographie: get('biographie'),
+      video: get('video'), book: get('book'),
+      disponibilite: get('disponibilite'), mobilite: get('mobilite'),
+      jours, message: get('message'), date
+    };
+
     launchSaber(() => {
-      // 2. Hyperespace sur toute la page, puis succès
-      launchHyperspace(() => {
-        document.getElementById('candidature-form').style.display = 'none';
-        document.getElementById('success-screen').classList.add('visible');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        // ══ CONNEXION TALLY : form.action = 'https://tally.so/r/TON_ID'; form.method = 'POST'; form.submit();
+      launchHyperspace(async () => {
+        try {
+          await Promise.allSettled([
+
+            // Web3Forms — stockage + email vers toi
+            fetch('https://api.web3forms.com/submit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify({
+                access_key: '9cb7828a-4f4c-411f-81d5-145bc65cfe40',
+                subject: `[DJUM] Nouvelle candidature Talent — ${data.prenom} ${data.nom}`,
+                from_name: 'DJUMPERFORMANCE Site',
+                'Prénom': data.prenom, 'Nom': data.nom, 'Email': data.email,
+                'Téléphone': data.telephone || '—', 'Âge': data.age, 'Ville': data.ville,
+                'Instagram': data.instagram || '—', 'TikTok': data.tiktok || '—',
+                'Expérience': data.experience, 'Formation': data.formation || '—',
+                'Disciplines': data.disciplines || '—', 'Langues': data.langues || '—',
+                'Biographie': data.biographie || '—', 'Vidéo': data.video,
+                'Book': data.book || '—', 'Disponibilité': data.disponibilite,
+                'Mobilité': data.mobilite || '—', 'Jours': data.jours || '—',
+                'Message': data.message || '—', 'Date': data.date,
+                'Source': 'candidature-talent'
+              })
+            }),
+
+            // EmailJS — confirmation automatique au candidat
+            emailjs.send('service_jaj9i0q', 'template_f6lc9zh', {
+              to_name: data.prenom,
+              to_email: data.email,
+              prenom: data.prenom,
+              nom: data.nom,
+              poste: data.disciplines || data.experience || 'Talent',
+              ville: data.ville,
+              disponibilite: data.disponibilite || 'À définir',
+              date: data.date
+            })
+
+          ]);
+        } catch(err) {
+          console.error('[DJUM] Erreur envoi:', err);
+        } finally {
+          document.getElementById('candidature-form').style.display = 'none';
+          document.getElementById('success-screen').classList.add('visible');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
       });
     });
   }
