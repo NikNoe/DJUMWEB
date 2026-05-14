@@ -21,75 +21,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/global.css">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --gold: #C9A84C;
-    --gold-dim: #8a6e2f;
-    --gold-light: #e8c97a;
-    --star-white: #F0EEE6;
-    --bg: #05060A;
-    --bg2: #0B0D14;
-    --bg3: #0f1119;
-    --text-muted: #7A7D8A;
-    --serif: 'Cormorant Garamond', Georgia, serif;
-    --mono: 'Space Mono', monospace;
-  }
-
-  html { scroll-behavior: smooth; }
-  body { background: var(--bg); color: var(--star-white); font-family: var(--serif); min-height: 100vh; overflow-x: hidden; }
-
-  /* ─── CANVAS ÉTOILÉ ─── */
-  #star-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-
-  /* ─── NAVIGATION ─── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.5rem 3rem;
-    background: linear-gradient(to bottom, rgba(5,6,10,0.97) 0%, transparent 100%);
-  }
-  .logo {
-    font-family: var(--mono); font-size: 13px; letter-spacing: 0.25em;
-    color: var(--gold); text-transform: uppercase; font-weight: 700;
-    text-decoration: none;
-  }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
-    color: var(--text-muted); text-transform: uppercase; text-decoration: none;
-    transition: color 0.3s;
-  }
-  .nav-links a:hover { color: var(--gold); }
-  .nav-cta {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
-    color: var(--bg); background: var(--gold); border: none; cursor: pointer;
-    padding: 0.65rem 1.4rem; text-transform: uppercase; font-weight: 700;
-    text-decoration: none; transition: opacity 0.3s, box-shadow 0.4s, transform 0.2s; display: inline-block;
-  }
-  .nav-cta:hover {
-    opacity: 0.92; transform: translateY(-1px);
-    box-shadow: 0 0 14px rgba(201,168,76,0.55), 0 0 32px rgba(201,168,76,0.22);
-  }
-
-  /* ─── HAMBURGER ─── */
-  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
-  .hamburger span { width: 24px; height: 1px; background: var(--gold); display: block; transition: all 0.3s; }
-  .mobile-menu {
-    display: none; position: fixed; inset: 0; z-index: 200;
-    background: rgba(5,6,10,0.99); flex-direction: column;
-    align-items: center; justify-content: center; gap: 2.5rem;
-  }
-  .mobile-menu.open { display: flex; }
-  .mobile-menu a {
-    font-family: var(--mono); font-size: 12px; letter-spacing: 0.3em;
-    color: var(--star-white); text-transform: uppercase; text-decoration: none;
-    transition: color 0.3s;
-  }
-  .mobile-menu a:hover { color: var(--gold); }
-  .mobile-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--gold); font-size: 1.5rem; cursor: pointer; font-family: var(--mono); }
-
   /* ─── HERO ─── */
   #accueil {
     position: relative; z-index: 1;
@@ -130,29 +64,6 @@
     display: flex; gap: 1.2rem; margin-top: 3.5rem; flex-wrap: wrap; justify-content: center;
     opacity: 0; animation: fadeUp 1s ease 1.3s forwards;
   }
-  .btn-primary {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
-    background: var(--gold); color: var(--bg); border: none; cursor: pointer;
-    padding: 1rem 2.2rem; text-transform: uppercase; font-weight: 700;
-    text-decoration: none; display: inline-block;
-    transition: opacity 0.3s, box-shadow 0.4s, transform 0.2s;
-  }
-  .btn-primary:hover {
-    opacity: 0.92; transform: translateY(-1px);
-    box-shadow: 0 0 18px rgba(201,168,76,0.6), 0 0 45px rgba(201,168,76,0.28), 0 0 90px rgba(201,168,76,0.12);
-  }
-  .btn-secondary {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
-    background: transparent; color: var(--gold);
-    border: 1px solid var(--gold-dim); cursor: pointer;
-    padding: 1rem 2.2rem; text-transform: uppercase;
-    text-decoration: none; display: inline-block;
-    transition: border-color 0.3s, color 0.3s, box-shadow 0.4s, transform 0.2s;
-  }
-  .btn-secondary:hover {
-    border-color: var(--gold); color: var(--star-white); transform: translateY(-1px);
-    box-shadow: 0 0 14px rgba(201,168,76,0.4), 0 0 38px rgba(201,168,76,0.18);
-  }
   .scroll-hint {
     position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
     font-family: var(--mono); font-size: 9px; letter-spacing: 0.3em;
@@ -161,16 +72,6 @@
     opacity: 0; animation: fadeUp 1s ease 1.6s forwards;
   }
   .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold-dim), transparent); animation: scrollPulse 2s ease-in-out infinite; }
-
-  /* ─── SECTIONS ─── */
-  section { position: relative; z-index: 1; }
-  .section-inner { max-width: 1100px; margin: 0 auto; padding: 7rem 3rem; }
-  .section-label {
-    font-family: var(--mono); font-size: 10px; letter-spacing: 0.35em;
-    color: var(--gold); text-transform: uppercase; margin-bottom: 4rem;
-    display: flex; align-items: center; gap: 1rem;
-  }
-  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--gold-dim); opacity: 0.3; }
 
   /* ─── UNIVERS ─── */
   #univers { background: var(--bg); }
@@ -275,7 +176,6 @@
   .contact-info h2 { font-family: var(--serif); font-weight: 300; font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.2; margin-bottom: 1.5rem; }
   .contact-info h2 em { color: var(--gold); font-style: italic; }
   .contact-info p { font-family: var(--serif); font-size: 1rem; color: var(--text-muted); line-height: 1.9; margin-bottom: 2rem; }
-  /* ─── SOCIAL LINKS ─── */
   .social-links { display: flex; flex-direction: column; gap: 0.6rem; }
   .social-link {
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em;
@@ -293,8 +193,6 @@
   }
   .social-icon { width: 15px; height: 15px; flex-shrink: 0; color: var(--gold-dim); transition: color 0.3s; }
   .social-link:hover .social-icon { color: var(--gold); }
-
-  /* ─── FORMULAIRE CONTACT ─── */
   .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
   .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
   .form-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; }
@@ -318,39 +216,15 @@
     box-shadow: 0 0 16px rgba(201,168,76,0.55), 0 0 40px rgba(201,168,76,0.22);
   }
 
-  /* ─── FOOTER ─── */
-  footer {
-    position: relative; z-index: 1;
-    border-top: 1px solid rgba(201,168,76,0.12);
-    padding: 2.5rem 3rem;
-    display: flex; align-items: center; justify-content: space-between;
-    font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
-    color: var(--text-muted); text-transform: uppercase;
-  }
-  footer span { color: var(--gold); }
-  .footer-links { display: flex; gap: 2rem; }
-  .footer-links a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; }
-  .footer-links a:hover { color: var(--gold); }
-
   /* ─── ANIMATIONS ─── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
   @keyframes scrollPulse {
     0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
   }
 
   /* ─── RESPONSIVE MOBILE ─── */
   @media (max-width: 768px) {
-    nav { padding: 1.2rem 1.5rem; }
-    .nav-links, .nav-cta { display: none; }
-    .hamburger { display: flex; }
-    .section-inner { padding: 5rem 1.5rem; }
     .univers-grid, .soutenir-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
     .projets-grid, .cards-grid { grid-template-columns: 1fr; }
-    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
-    .footer-links { justify-content: center; }
   }
 </style>
 </head>
@@ -652,132 +526,10 @@
 </footer>
 
 <!-- ░░ SCRIPTS ░░ -->
+<script src="assets/js/nav.js"></script>
+<script src="assets/js/stars.js"></script>
 <script>
-  // ── Menu mobile
-  function openMenu() { document.getElementById('mobileMenu').classList.add('open'); }
-  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
-
-  // ── Canvas étoilé
-  const canvas = document.getElementById('star-canvas');
-  const ctx = canvas.getContext('2d');
-  let stars = [];
-  let W, H;
-
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-
-  // ── Bruit de Perlin simplifié pour scintillement organique
-  function noise(x) {
-    const X = Math.floor(x) & 255;
-    x -= Math.floor(x);
-    const u = x * x * x * (x * (x * 6 - 15) + 10);
-    return lerp(u, grad(X, x), grad(X + 1, x - 1));
-  }
-  function lerp(t, a, b) { return a + t * (b - a); }
-  function grad(hash, x) { return (hash & 1) === 0 ? x : -x; }
-
-  function initStars() {
-    stars = [];
-    const count = Math.floor((W * H) / 1800);
-    for (let i = 0; i < count; i++) {
-      const rnd = Math.random();
-      stars.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        // Tailles variées : petites majoritaires, quelques grandes
-        r: rnd < 0.7 ? Math.random() * 0.8 + 0.2
-           : rnd < 0.92 ? Math.random() * 0.8 + 0.9
-           : Math.random() * 0.6 + 1.6,
-        // Chaque étoile a plusieurs fréquences de scintillement superposées
-        f1: Math.random() * 0.4 + 0.05,   // fréquence lente
-        f2: Math.random() * 2.0 + 0.8,    // fréquence rapide
-        f3: Math.random() * 5.0 + 2.0,    // micro-turbulence
-        p1: Math.random() * 100,
-        p2: Math.random() * 100,
-        p3: Math.random() * 100,
-        // Amplitude de chaque couche
-        a1: Math.random() * 0.3 + 0.1,
-        a2: Math.random() * 0.25 + 0.05,
-        a3: Math.random() * 0.12,
-        // Luminosité de base (certaines étoiles sont naturellement plus sombres)
-        base: Math.random() * 0.25 + 0.05,
-        // Flash spontané aléatoire
-        flashTimer: Math.random() * 800,
-        flashDur: Math.random() * 60 + 20,
-        flashInt: 0,
-        // Type
-        gold: Math.random() < 0.07,
-        bright: rnd > 0.88
-      });
-    }
-  }
-
-  function drawStars(t) {
-    ctx.clearRect(0, 0, W, H);
-    for (const s of stars) {
-      // Scintillement multi-couches irrégulier
-      const slow  = Math.sin(t * s.f1 + s.p1) * s.a1;
-      const fast  = Math.sin(t * s.f2 + s.p2) * s.a2;
-      const micro = Math.sin(t * s.f3 + s.p3) * s.a3;
-
-      // Flash spontané : déclenché aléatoirement, durée courte
-      s.flashTimer -= 1;
-      if (s.flashTimer <= 0) {
-        s.flashTimer = Math.random() * 600 + 200;
-        s.flashInt = s.bright ? 0.7 : 0.4;
-        s.flashDur = Math.random() * 40 + 10;
-      }
-      let flash = 0;
-      if (s.flashInt > 0) {
-        flash = s.flashInt;
-        s.flashInt -= s.flashInt / s.flashDur;
-        if (s.flashInt < 0.01) s.flashInt = 0;
-      }
-
-      let a = Math.max(0, Math.min(1, s.base + slow + fast + micro + flash));
-
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-
-      if (s.gold) {
-        ctx.fillStyle = `rgba(201,168,76,${a})`;
-        ctx.fill();
-        // Halo doré sur les étoiles brillantes
-        if (a > 0.55 && s.r > 1) {
-          ctx.beginPath();
-          ctx.arc(s.x, s.y, s.r * 3, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(201,168,76,${(a - 0.55) * 0.15})`;
-          ctx.fill();
-        }
-      } else {
-        ctx.fillStyle = `rgba(240,238,230,${a})`;
-        ctx.fill();
-        // Halo blanc sur les grandes étoiles très brillantes
-        if (a > 0.65 && s.r > 1.4) {
-          ctx.beginPath();
-          ctx.arc(s.x, s.y, s.r * 2.8, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(240,238,230,${(a - 0.65) * 0.12})`;
-          ctx.fill();
-        }
-      }
-    }
-  }
-
-  let lastT = 0;
-  function loop(ts) {
-    const t = ts * 0.001; // secondes
-    drawStars(t);
-    requestAnimationFrame(loop);
-  }
-
-  resize();
-  initStars();
-  window.addEventListener('resize', () => { resize(); initStars(); });
-  requestAnimationFrame(loop);
-
-  // ── Nav active au scroll
+  // Nav active au scroll
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-links a');
   window.addEventListener('scroll', () => {

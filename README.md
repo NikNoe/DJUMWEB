@@ -33,11 +33,16 @@ DJUMPERFORMANCE est une maison de production indépendante fondée sur une convi
 ```
 ├── assets/
 │   ├── css/
-│   └── images/
-│       ├── 1561417538227_Original 2.PNG
-│       ├── 1561417538227_Original.PNG
-│       ├── djum.PNG
-│       └── ian-kenny.jpg
+│   │   ├── global.css
+│   │   └── tokens.css
+│   ├── images/
+│   │   ├── 1561417538227_Original 2.PNG
+│   │   ├── 1561417538227_Original.PNG
+│   │   ├── djum.PNG
+│   │   └── ian-kenny.jpg
+│   └── js/
+│       ├── nav.js
+│       └── stars.js
 ├── scripts/
 │   ├── install-hooks.js
 │   └── update-readme.js
@@ -78,10 +83,10 @@ Tous les fichiers partagent les mêmes tokens CSS (déclarés dans chaque `:root
 
 Extraction des patterns partagés (inline → fichiers externes) :
 
-- [ ] assets/css/tokens.css — CSS variables
-- [ ] assets/css/global.css — reset + base styles
-- [ ] assets/js/stars.js — star canvas animation
-- [ ] assets/js/nav.js — mobile menu
+- [x] assets/css/tokens.css — CSS variables
+- [x] assets/css/global.css — reset + base styles
+- [x] assets/js/stars.js — star canvas animation
+- [x] assets/js/nav.js — mobile menu
 - [ ] assets/js/forms.js — form validation & steps
 
 ---
@@ -110,10 +115,10 @@ node scripts/update-readme.js
 - [x] candidature-talent.html
 - [x] candidature-technique.html
 - [x] candidature-lieu.html
-- [ ] Extract assets/css/tokens.css
-- [ ] Extract assets/css/global.css
-- [ ] Extract assets/js/stars.js
-- [ ] Extract assets/js/nav.js
+- [x] Extract assets/css/tokens.css
+- [x] Extract assets/css/global.css
+- [x] Extract assets/js/stars.js
+- [x] Extract assets/js/nav.js
 - [ ] Extract assets/js/forms.js
 - [ ] Replace all Formspree placeholders
 - [ ] Add real project images

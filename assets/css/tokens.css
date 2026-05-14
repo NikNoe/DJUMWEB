@@ -1,0 +1,12 @@
+:root {
+  --gold: #C9A84C;
+  --gold-dim: #8a6e2f;
+  --gold-light: #e8c97a;
+  --star-white: #F0EEE6;
+  --bg: #05060A;
+  --bg2: #0B0D14;
+  --bg3: #0f1119;
+  --text-muted: #7A7D8A;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --mono: 'Space Mono', monospace;
+}
