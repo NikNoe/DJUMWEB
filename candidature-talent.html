@@ -78,7 +78,7 @@
     max-width: 1100px; margin: 0 auto;
     display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end;
   }
-  .hero-left { }
+
   .hero-eyebrow {
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.4em;
     color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem;
@@ -396,6 +396,7 @@
   #hyperspace-canvas { position: absolute; inset: 0; }
 
 
+  @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
@@ -628,7 +629,7 @@
 
       <div class="fields-grid single" style="margin-top:1.5rem;">
         <div class="field">
-          <label class="field-label" for="langues">Langues parlées</label>
+          <label class="field-label" for="langues">Langues parlées <span class="required">*</span></label>
           <div style="position:relative">
             <div id="langues-container" style="
               background:#0B0D14; border:1px solid rgba(201,168,76,0.15);
@@ -959,6 +960,38 @@
         langContainer.style.borderColor = '';
       }
     }
+    if (n === 3) {
+      const videoField = document.getElementById('video');
+      const videoVal = videoField.value.trim();
+      const videoParent = videoField.closest('.video-field');
+
+      let urlOk = false;
+      try {
+        const url = new URL(videoVal);
+        urlOk = url.protocol === 'https:' || url.protocol === 'http:';
+      } catch(e) {
+        urlOk = false;
+      }
+
+      if (!videoVal || !urlOk) {
+        videoField.style.borderColor = 'rgba(220,80,80,0.6)';
+        videoParent.style.borderColor = 'rgba(220,80,80,0.6)';
+        let errMsg = document.getElementById('video-error');
+        if (!errMsg) {
+          errMsg = document.createElement('div');
+          errMsg.id = 'video-error';
+          errMsg.style.cssText = 'font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:rgba(220,80,80,0.8);margin-top:6px;';
+          errMsg.textContent = 'Lien invalide — ex: https://youtu.be/... ou https://drive.google.com/...';
+          videoParent.appendChild(errMsg);
+        }
+        valid = false;
+      } else {
+        videoField.style.borderColor = '';
+        videoParent.style.borderColor = '';
+        const errMsg = document.getElementById('video-error');
+        if (errMsg) errMsg.remove();
+      }
+    }
     return valid;
   }
 
@@ -1021,30 +1054,44 @@
   // ── AUTOCOMPLÉTION VILLES
   const villeInput = document.getElementById('ville');
   const villeSuggestions = document.getElementById('ville-suggestions');
-  const FRENCH_CITIES = (window.cities || [])
-    .filter(c => c.country === 'FR')
-    .map(c => c.name)
-    .sort();
+  let villeDebounce = null;
 
   villeInput.addEventListener('input', function() {
-    const q = this.value.trim().toLowerCase();
+    const q = this.value.trim();
     villeSuggestions.innerHTML = '';
-    if (q.length < 2) { villeSuggestions.style.display = 'none'; return; }
-    const matches = FRENCH_CITIES.filter(c => c.toLowerCase().startsWith(q)).slice(0, 8);
-    if (!matches.length) { villeSuggestions.style.display = 'none'; return; }
-    matches.forEach(city => {
-      const li = document.createElement('li');
-      li.textContent = city;
-      li.style.cssText = 'padding:10px 14px;cursor:pointer;font-family:var(--serif);font-size:0.95rem;color:#F0EEE6;border-bottom:1px solid rgba(201,168,76,0.08);';
-      li.addEventListener('mouseenter', () => li.style.background = 'rgba(201,168,76,0.08)');
-      li.addEventListener('mouseleave', () => li.style.background = '');
-      li.addEventListener('mousedown', () => {
-        villeInput.value = city;
+    villeSuggestions.style.display = 'none';
+
+    clearTimeout(villeDebounce);
+    if (q.length < 2) return;
+
+    villeDebounce = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `https://geo.api.gouv.fr/communes?nom=${encodeURIComponent(q)}&fields=nom,codesPostaux&boost=population&limit=8`
+        );
+        const data = await res.json();
+        villeSuggestions.innerHTML = '';
+
+        if (!data.length) { villeSuggestions.style.display = 'none'; return; }
+
+        data.forEach(commune => {
+          const cp = commune.codesPostaux?.[0] || '';
+          const li = document.createElement('li');
+          li.style.cssText = 'padding:10px 14px;cursor:pointer;font-family:var(--serif);font-size:0.95rem;color:#F0EEE6;border-bottom:1px solid rgba(201,168,76,0.08);display:flex;justify-content:space-between;align-items:center;gap:1rem;';
+          li.innerHTML = `<span>${commune.nom}</span><span style="font-family:var(--mono);font-size:10px;color:#C9A84C;letter-spacing:0.1em;">${cp}</span>`;
+          li.addEventListener('mouseenter', () => li.style.background = 'rgba(201,168,76,0.08)');
+          li.addEventListener('mouseleave', () => li.style.background = '');
+          li.addEventListener('mousedown', () => {
+            villeInput.value = `${commune.nom} ${cp}`;
+            villeSuggestions.style.display = 'none';
+          });
+          villeSuggestions.appendChild(li);
+        });
+        villeSuggestions.style.display = 'block';
+      } catch(e) {
         villeSuggestions.style.display = 'none';
-      });
-      villeSuggestions.appendChild(li);
-    });
-    villeSuggestions.style.display = 'block';
+      }
+    }, 250);
   });
   document.addEventListener('click', e => {
     if (!villeInput.contains(e.target)) villeSuggestions.style.display = 'none';
