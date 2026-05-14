@@ -39,6 +39,7 @@ DJUMPERFORMANCE est une maison de production indépendante fondée sur une convi
 │       ├── djum.PNG
 │       └── ian-kenny.jpg
 ├── scripts/
+│   ├── install-hooks.js
 │   └── update-readme.js
 ├── a-propos.html
 ├── candidature-lieu.html
