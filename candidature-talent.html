@@ -421,6 +421,8 @@
   }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cities.json@1.1.2/cities.min.js"></script>
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 </head>
 <body>
 
@@ -536,7 +538,15 @@
         </div>
         <div class="field">
           <label class="field-label" for="ville">Ville / Localisation <span class="required">*</span></label>
-          <input class="field-input" type="text" id="ville" name="ville" placeholder="Paris, Lyon, Marseille..." required>
+          <div style="position:relative">
+            <input class="field-input" type="text" id="ville" name="ville"
+              placeholder="Paris, Lyon, Marseille..." required autocomplete="off">
+            <ul id="ville-suggestions" style="
+              position:absolute; z-index:999; width:100%;
+              background:#0B0D14; border:1px solid rgba(201,168,76,0.25);
+              list-style:none; margin:0; padding:0; max-height:200px;
+              overflow-y:auto; display:none;"></ul>
+          </div>
         </div>
       </div>
 
@@ -627,7 +637,27 @@
       <div class="fields-grid single" style="margin-top:1.5rem;">
         <div class="field">
           <label class="field-label" for="langues">Langues parlées</label>
-          <input class="field-input" type="text" id="langues" name="langues" placeholder="Français, Anglais, Arabe...">
+          <div style="position:relative">
+            <div id="langues-container" style="
+              background:#0B0D14; border:1px solid rgba(201,168,76,0.15);
+              padding:0.6rem 0.8rem; min-height:48px;
+              display:flex; flex-wrap:wrap; gap:6px; align-items:center;
+              cursor:text; transition:border-color 0.3s;"
+              onclick="document.getElementById('langues-input').focus()">
+              <div id="langues-tags" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+              <input id="langues-input" type="text"
+                placeholder="Français, Anglais..." autocomplete="off"
+                style="border:none;background:transparent;outline:none;
+                color:#F0EEE6;font-family:'Cormorant Garamond',serif;
+                font-size:1rem;min-width:120px;flex:1;padding:2px 4px;">
+              <input type="hidden" id="langues" name="langues">
+              <ul id="langues-suggestions" style="
+                position:absolute;z-index:999;
+                background:#0B0D14;border:1px solid rgba(201,168,76,0.25);
+                list-style:none;margin:0;padding:0;
+                max-height:180px;overflow-y:auto;display:none;min-width:200px;"></ul>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -658,10 +688,14 @@
         <div class="field">
           <label class="field-label">Vidéo de performance <span class="required">*</span></label>
           <div class="video-field">
-            <div class="video-field-icon">Lien YouTube non répertorié</div>
-            <input type="url" id="video" name="video" placeholder="https://youtu.be/votre-lien-non-repertorie" required>
-            <div class="video-hint">
-              YouTube Studio → Upload → Visibilité : Non répertorié → Copier le lien
+            <input type="url" id="video" name="video"
+              placeholder="YouTube, Drive, OneDrive, Vimeo..." required
+              style="width:100%">
+            <div class="video-hint" style="
+              font-family:'Space Mono',monospace;font-size:9px;
+              letter-spacing:0.15em;color:rgba(122,125,138,0.5);
+              margin-top:6px;font-style:italic;">
+              Lien non répertorié — votre vidéo reste privée
             </div>
           </div>
         </div>
@@ -764,12 +798,21 @@
 
       <div style="margin-top:2rem; padding:1.5rem 2rem; background:var(--bg2); border:1px solid rgba(201,168,76,0.12);">
         <label class="checkbox-item" style="gap:1rem;">
-          <input type="checkbox" id="consent" required>
+          <input type="checkbox" id="consent" required onchange="checkUnlock()">
           <span class="checkbox-box"></span>
           <span style="font-family:var(--serif); font-size:0.9rem; color:var(--text-muted); line-height:1.7; cursor:pointer;">
             J'ai lu et j'accepte les conditions de participation. Je comprends que ce projet est non rémunéré et j'y adhère librement, par amour du cinéma.
           </span>
         </label>
+      </div>
+
+      <div style="margin-top:1.5rem;">
+        <div class="h-captcha"
+          data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"
+          data-callback="checkUnlock"
+          data-expired-callback="checkUnlock"
+          style="margin-bottom:1.5rem;">
+        </div>
       </div>
 
       <div class="form-nav">
@@ -779,7 +822,7 @@
           <!-- Bouton avec canvas sabre lumineux -->
           <div class="submit-wrap" id="submit-wrap">
             <canvas class="saber-canvas" id="saber-canvas"></canvas>
-            <button type="button" class="btn-submit" id="btn-submit" onclick="submitForm()">Envoyer ma candidature</button>
+            <button type="button" class="btn-submit" id="btn-submit" onclick="submitForm()" disabled style="opacity:0.35;cursor:not-allowed;pointer-events:none;">Envoyer ma candidature</button>
           </div>
         </div>
       </div>
@@ -916,6 +959,14 @@
         valid = false;
       }
     });
+    if (n === 2) {
+      if (selectedLangs.length === 0) {
+        langContainer.style.borderColor = 'rgba(220,80,80,0.6)';
+        valid = false;
+      } else {
+        langContainer.style.borderColor = '';
+      }
+    }
     return valid;
   }
 
@@ -975,14 +1026,126 @@
     document.getElementById('recap-content').innerHTML = html;
   }
 
+  // ── AUTOCOMPLÉTION VILLES
+  const villeInput = document.getElementById('ville');
+  const villeSuggestions = document.getElementById('ville-suggestions');
+  const FRENCH_CITIES = (window.cities || [])
+    .filter(c => c.country === 'FR')
+    .map(c => c.name)
+    .sort();
+
+  villeInput.addEventListener('input', function() {
+    const q = this.value.trim().toLowerCase();
+    villeSuggestions.innerHTML = '';
+    if (q.length < 2) { villeSuggestions.style.display = 'none'; return; }
+    const matches = FRENCH_CITIES.filter(c => c.toLowerCase().startsWith(q)).slice(0, 8);
+    if (!matches.length) { villeSuggestions.style.display = 'none'; return; }
+    matches.forEach(city => {
+      const li = document.createElement('li');
+      li.textContent = city;
+      li.style.cssText = 'padding:10px 14px;cursor:pointer;font-family:var(--serif);font-size:0.95rem;color:#F0EEE6;border-bottom:1px solid rgba(201,168,76,0.08);';
+      li.addEventListener('mouseenter', () => li.style.background = 'rgba(201,168,76,0.08)');
+      li.addEventListener('mouseleave', () => li.style.background = '');
+      li.addEventListener('mousedown', () => {
+        villeInput.value = city;
+        villeSuggestions.style.display = 'none';
+      });
+      villeSuggestions.appendChild(li);
+    });
+    villeSuggestions.style.display = 'block';
+  });
+  document.addEventListener('click', e => {
+    if (!villeInput.contains(e.target)) villeSuggestions.style.display = 'none';
+  });
+
+  // ── TAGS LANGUES
+  const LANGUAGES = ['Français','Anglais','Espagnol','Arabe','Portugais',
+    'Mandarin','Allemand','Italien','Japonais','Russe','Néerlandais',
+    'Polonais','Turc','Hindi','Coréen','Suédois','Hébreu','Persan',
+    'Roumain','Vietnamien','Grec','Hongrois','Tchèque','Danois','Finnois'];
+  let selectedLangs = [];
+
+  const langInput = document.getElementById('langues-input');
+  const langSugg = document.getElementById('langues-suggestions');
+  const langHidden = document.getElementById('langues');
+  const langTags = document.getElementById('langues-tags');
+  const langContainer = document.getElementById('langues-container');
+
+  function renderLangTags() {
+    langTags.innerHTML = '';
+    selectedLangs.forEach((lang, i) => {
+      const tag = document.createElement('span');
+      tag.style.cssText = 'display:inline-flex;align-items:center;gap:5px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.3);color:#C9A84C;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:0.1em;padding:3px 8px;';
+      tag.innerHTML = `${lang} <span style="cursor:pointer;opacity:0.7;" data-i="${i}">✕</span>`;
+      tag.querySelector('span').addEventListener('click', () => {
+        selectedLangs.splice(i, 1);
+        renderLangTags();
+      });
+      langTags.appendChild(tag);
+    });
+    langHidden.value = selectedLangs.join(', ');
+  }
+
+  function addLang(lang) {
+    const clean = lang.trim();
+    if (!clean || selectedLangs.includes(clean)) return;
+    selectedLangs.push(clean);
+    renderLangTags();
+    langInput.value = '';
+    langSugg.style.display = 'none';
+  }
+
+  langInput.addEventListener('input', function() {
+    const q = this.value.trim().toLowerCase();
+    langSugg.innerHTML = '';
+    if (!q) { langSugg.style.display = 'none'; return; }
+    const matches = LANGUAGES.filter(l =>
+      l.toLowerCase().startsWith(q) && !selectedLangs.includes(l)
+    ).slice(0, 6);
+    if (!matches.length) { langSugg.style.display = 'none'; return; }
+    matches.forEach(lang => {
+      const li = document.createElement('li');
+      li.textContent = lang;
+      li.style.cssText = 'padding:9px 14px;cursor:pointer;font-family:"Cormorant Garamond",serif;font-size:0.95rem;color:#F0EEE6;border-bottom:1px solid rgba(201,168,76,0.08);';
+      li.addEventListener('mouseenter', () => li.style.background = 'rgba(201,168,76,0.08)');
+      li.addEventListener('mouseleave', () => li.style.background = '');
+      li.addEventListener('mousedown', () => addLang(lang));
+      langSugg.appendChild(li);
+    });
+    langSugg.style.display = 'block';
+  });
+
+  langInput.addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ',') && langInput.value.trim()) {
+      e.preventDefault();
+      addLang(langInput.value);
+    }
+  });
+
+  document.addEventListener('click', e => {
+    if (!langContainer.contains(e.target)) langSugg.style.display = 'none';
+  });
+
+  // ── DÉVERROUILLAGE BOUTON SUBMIT
+  function checkUnlock() {
+    const cguOk = document.getElementById('consent').checked;
+    const captchaOk = typeof hcaptcha !== 'undefined' && hcaptcha.getResponse().length > 0;
+    const btn = document.getElementById('btn-submit');
+    if (cguOk && captchaOk) {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.style.cursor = 'pointer';
+      btn.style.pointerEvents = 'auto';
+    } else {
+      btn.disabled = true;
+      btn.style.opacity = '0.35';
+      btn.style.cursor = 'not-allowed';
+      btn.style.pointerEvents = 'none';
+    }
+  }
+
   // ── SOUMISSION AVEC ANIMATION
   async function submitForm() {
-    const consent = document.getElementById('consent');
-    if (!consent.checked) {
-      consent.closest('label').style.outline = '1px solid rgba(220,80,80,0.5)';
-      return;
-    }
-
     const get = (id) => document.getElementById(id)?.value?.trim() || '';
     const disciplines = [...document.querySelectorAll('input[name="disciplines"]:checked')].map(c => c.value).join(', ');
     const jours = [...document.querySelectorAll('input[name="jours"]:checked')].map(c => c.value).join(', ');
