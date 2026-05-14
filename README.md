@@ -31,6 +31,8 @@ DJUMPERFORMANCE est une maison de production indépendante fondée sur une convi
 ## Architecture
 
 ```
+├── .vscode/
+│   └── launch.json
 ├── assets/
 │   ├── css/
 │   │   ├── global.css
@@ -42,6 +44,7 @@ DJUMPERFORMANCE est une maison de production indépendante fondée sur une convi
 │   │   └── ian-kenny.jpg
 │   └── js/
 │       ├── nav.js
+│       ├── star-signature.js
 │       └── stars.js
 ├── scripts/
 │   ├── install-hooks.js

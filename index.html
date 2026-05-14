@@ -45,7 +45,7 @@
   .hero-title-bold {
     font-weight: 600; font-style: normal;
     font-size: clamp(3rem, 8vw, 7rem); line-height: 1.05;
-    color: var(--gold); display: block;
+    color: var(--gold);
     opacity: 0; animation: fadeUp 1.2s ease 0.7s forwards;
     letter-spacing: 0.04em;
   }
@@ -72,6 +72,35 @@
     opacity: 0; animation: fadeUp 1s ease 1.6s forwards;
   }
   .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold-dim), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+
+  /* ─── ÉTOILE SIGNATURE ─── */
+  .hero-star {
+    display: inline-block;
+    vertical-align: baseline;
+    height: 0.8em;
+    width: auto;
+    will-change: transform;
+    margin-left: 0.1em;
+  }
+  .hero-star__svg {
+    display: block;
+    height: 100%;
+    width: auto;
+    animation: starShimmer 2s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes starShimmer {
+    0%, 100% {
+      opacity: 0.4;
+      transform: scale(0.9);
+      filter: drop-shadow(0 0 3px rgba(240,238,230,0.15));
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 8px rgba(240,238,230,0.6));
+    }
+  }
 
   /* ─── UNIVERS ─── */
   #univers { background: var(--bg); }
@@ -264,7 +293,7 @@
 <section id="accueil">
   <p class="hero-eyebrow">Maison de production indépendante — Paris</p>
   <h1 class="hero-title">La performance<br>
-    <span class="hero-title-bold">d'un rêve.</span>
+    <span class="hero-title-bold">d'un rêve<span class="hero-star" id="hero-star" aria-hidden="true"><svg class="hero-star__svg" viewBox="0 0 56 140" xmlns="http://www.w3.org/2000/svg"><polygon points="28,2 32,66 54,70 32,74 28,138 24,74 2,70 24,66" fill="var(--star-white)"/></svg></span></span>
   </h1>
   <div class="hero-divider"></div>
   <p class="hero-sub">
@@ -528,6 +557,7 @@
 <!-- ░░ SCRIPTS ░░ -->
 <script src="assets/js/nav.js"></script>
 <script src="assets/js/stars.js"></script>
+<script src="assets/js/star-signature.js"></script>
 <script>
   // Nav active au scroll
   const sections = document.querySelectorAll('section[id]');
