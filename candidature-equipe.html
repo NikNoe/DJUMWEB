@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DJUMPERFORMANCE — Candidature Équipe. Rejoignez notre maison de production indépendante en tant que technicien·ne ou artisan·e du film.">
+<meta property="og:title" content="DJUMPERFORMANCE — Candidature Équipe">
+<meta property="og:url" content="https://djumperformance.com/candidature-equipe.html">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+<!-- ══ FAVICON ══ -->
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<link rel="shortcut icon" href="favicon.ico">
+
+<title>Candidature Équipe — DJUMPERFORMANCE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --gold: #C9A84C; --gold-dim: #8a6e2f; --gold-light: #e8c97a;
+    --star-white: #F0EEE6; --bg: #05060A; --bg2: #0B0D14; --bg3: #0f1119;
+    --text-muted: #7A7D8A;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --mono: 'Space Mono', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--star-white); font-family: var(--serif); min-height: 100vh; overflow-x: hidden; }
+  #star-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+  /* ── NAV ── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 3rem; background: linear-gradient(to bottom, rgba(5,6,10,0.97) 0%, transparent 100%); }
+  .logo { font-family: var(--mono); font-size: 13px; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; font-weight: 700; text-decoration: none; }
+  .nav-back { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 0.8rem; transition: color 0.3s; }
+  .nav-back:hover { color: var(--gold); }
+  .nav-back::before { content: '←'; font-size: 14px; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { width: 24px; height: 1px; background: var(--gold); display: block; }
+  .mobile-menu { display: none; position: fixed; inset: 0; z-index: 200; background: rgba(5,6,10,0.99); flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: var(--mono); font-size: 12px; letter-spacing: 0.3em; color: var(--star-white); text-transform: uppercase; text-decoration: none; transition: color 0.3s; }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--gold); font-size: 1.5rem; cursor: pointer; font-family: var(--mono); }
+
+  /* ── HERO ── */
+  .page-hero { position: relative; z-index: 1; padding: 14rem 3rem 6rem; max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; }
+  .hero-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; display: flex; align-items: center; gap: 1rem; }
+  .hero-eyebrow::before { content: '01'; opacity: 0.4; }
+  .page-title { font-family: var(--serif); font-weight: 300; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; opacity: 0; animation: fadeUp 1s ease 0.4s forwards; }
+  .page-title em { font-style: italic; color: var(--gold); display: block; }
+  .hero-divider { width: 40px; height: 1px; background: var(--gold-dim); margin: 2rem 0; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+  .hero-desc { font-family: var(--serif); font-size: 1rem; line-height: 1.9; color: var(--text-muted); max-width: 420px; opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards; }
+  .hero-right { display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-end; opacity: 0; animation: fadeUp 0.8s ease 1s forwards; }
+  .hero-stat { text-align: right; }
+  .hero-stat-num { font-family: var(--mono); font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; }
+  .hero-stat-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; margin-top: 0.3rem; }
+  .hero-stat-divider { width: 1px; height: 40px; background: rgba(201,168,76,0.2); align-self: flex-end; }
+
+  /* ── TYPE SELECTOR ── */
+  .type-selector { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 3rem 6rem; }
+  .type-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; display: flex; align-items: center; gap: 1rem; }
+  .type-eyebrow::before { content: '02'; opacity: 0.4; }
+  .type-title { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; margin-bottom: 3rem; opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
+  .type-title em { color: var(--gold); font-style: italic; }
+  .type-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
+  .type-card { background: var(--bg2); border: 1px solid rgba(201,168,76,0.08); padding: 2.5rem 2rem; cursor: pointer; transition: border-color 0.3s, transform 0.3s, box-shadow 0.4s; position: relative; overflow: hidden; }
+  .type-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; }
+  .type-card:hover { border-color: rgba(201,168,76,0.3); transform: translateY(-3px); box-shadow: 0 0 20px rgba(201,168,76,0.08); }
+  .type-card:hover::before { transform: scaleX(1); }
+  .type-card.selected { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.05); }
+  .type-card.selected::before { transform: scaleX(1); }
+  .type-card-num { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 1.2rem; display: block; }
+  .type-card h3 { font-family: var(--serif); font-weight: 400; font-size: 1.4rem; margin-bottom: 0.8rem; }
+  .type-card p { font-family: var(--serif); font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
+
+  /* ── PROGRESS STEPS ── */
+  .steps-bar { position: relative; z-index: 1; border-top: 1px solid rgba(201,168,76,0.1); border-bottom: 1px solid rgba(201,168,76,0.1); background: var(--bg2); display: none; }
+  .steps-bar.visible { display: block; }
+  .steps-inner { max-width: 1100px; margin: 0 auto; padding: 0 3rem; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .step { padding: 1.2rem 0; display: flex; align-items: center; gap: 0.8rem; border-right: 1px solid rgba(201,168,76,0.08); cursor: pointer; transition: background 0.3s; padding-left: 1rem; }
+  .step:last-child { border-right: none; }
+  .step.active { background: rgba(201,168,76,0.05); }
+  .step-num { font-family: var(--mono); font-size: 9px; font-weight: 700; color: var(--gold-dim); letter-spacing: 0.1em; width: 22px; height: 22px; border: 1px solid var(--gold-dim); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.3s; }
+  .step.active .step-num { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+  .step.done .step-num { background: rgba(201,168,76,0.2); color: var(--gold); border-color: var(--gold); }
+  .step-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; transition: color 0.3s; }
+  .step.active .step-label { color: var(--star-white); }
+
+  /* ── FORM ── */
+  .form-container { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 5rem 3rem 8rem; display: none; }
+  .form-container.visible { display: block; animation: fadeUp 0.6s ease forwards; }
+  .form-section { display: none; }
+  .form-section.active { display: block; animation: fadeUp 0.5s ease forwards; }
+  .profile-block { display: none; }
+  .profile-block.active { display: block; }
+
+  .section-heading { margin-bottom: 3rem; }
+  .section-heading .label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.35em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 1rem; }
+  .section-heading .label::after { content: ''; flex: 1; height: 1px; background: var(--gold-dim); opacity: 0.2; max-width: 200px; }
+  .section-heading h2 { font-family: var(--serif); font-weight: 300; font-size: clamp(1.5rem, 3vw, 2.2rem); line-height: 1.2; }
+  .section-heading h2 em { color: var(--gold); font-style: italic; }
+
+  .fields-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 3rem; margin-bottom: 2rem; }
+  .fields-grid.single { grid-template-columns: 1fr; }
+  .fields-grid.triple { grid-template-columns: 1fr 1fr 1fr; }
+  .field { display: flex; flex-direction: column; gap: 0.5rem; }
+  .field.full { grid-column: 1 / -1; }
+  .field-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; }
+  .field-label .required { color: var(--gold-dim); font-size: 11px; }
+  .field-input, .field-select, .field-textarea { background: var(--bg2); border: 1px solid rgba(201,168,76,0.15); color: var(--star-white); font-family: var(--serif); font-size: 1rem; padding: 0.9rem 1rem; outline: none; transition: border-color 0.3s, background 0.3s; width: 100%; appearance: none; }
+  .field-input:focus, .field-select:focus, .field-textarea:focus { border-color: var(--gold); background: rgba(201,168,76,0.03); }
+  .field-input::placeholder, .field-textarea::placeholder { color: var(--text-muted); font-style: italic; }
+  .field-textarea { resize: vertical; min-height: 120px; }
+  .field-select { cursor: pointer; }
+  .field-select option { background: var(--bg2); }
+
+  .checkbox-group { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 0.3rem; }
+  .checkbox-item { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; }
+  .checkbox-item input[type="checkbox"] { display: none; }
+  .checkbox-box { width: 18px; height: 18px; border: 1px solid rgba(201,168,76,0.3); background: var(--bg2); flex-shrink: 0; position: relative; transition: all 0.2s; cursor: pointer; }
+  .checkbox-item input:checked ~ .checkbox-box { background: var(--gold); border-color: var(--gold); }
+  .checkbox-item input:checked ~ .checkbox-box::after { content: '✓'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--bg); font-size: 10px; font-weight: 700; font-family: var(--mono); }
+  .checkbox-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em; color: var(--text-muted); text-transform: uppercase; cursor: pointer; }
+  .checkbox-wrap.invalid { border: 1px solid rgba(220,80,80,0.6); padding: 0.6rem 0.8rem; }
+
+  /* ── FORM NAV ── */
+  .form-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(201,168,76,0.1); }
+  .btn-prev { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; background: transparent; color: var(--text-muted); border: 1px solid rgba(201,168,76,0.2); cursor: pointer; padding: 0.9rem 1.8rem; text-transform: uppercase; transition: color 0.3s, border-color 0.3s; display: flex; align-items: center; gap: 0.8rem; }
+  .btn-prev:hover { color: var(--star-white); border-color: var(--gold-dim); }
+  .btn-prev::before { content: '←'; }
+  .btn-next { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; background: var(--gold); color: var(--bg); border: none; cursor: pointer; padding: 0.9rem 2.2rem; text-transform: uppercase; font-weight: 700; transition: opacity 0.3s; display: flex; align-items: center; gap: 0.8rem; }
+  .btn-next:hover { opacity: 0.85; }
+  .btn-next::after { content: '→'; }
+  .btn-submit { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; background: var(--gold); color: var(--bg); border: none; cursor: pointer; padding: 0.9rem 2.8rem; text-transform: uppercase; font-weight: 700; transition: opacity 0.3s, box-shadow 0.4s, transform 0.2s; display: flex; align-items: center; gap: 0.8rem; }
+  .btn-submit:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 0 18px rgba(201,168,76,0.6), 0 0 45px rgba(201,168,76,0.28); }
+  .btn-submit::after { content: '★'; }
+  .step-counter { font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; }
+  .step-counter span { color: var(--gold); }
+
+  /* ── RECAP ── */
+  .recap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 2rem; }
+  .recap-item { background: var(--bg2); padding: 1.2rem 1.5rem; border: 1px solid rgba(201,168,76,0.08); }
+  .recap-key { font-family: var(--mono); font-size: 8px; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.4rem; }
+  .recap-val { font-family: var(--serif); font-size: 1rem; color: var(--star-white); word-break: break-word; }
+  .recap-val.empty { color: var(--text-muted); font-style: italic; }
+
+  /* ══ ENGAGEMENT ══ */
+  .engagement-message { margin-top: 3rem; padding: 3rem 2.5rem; background: var(--bg2); border: 1px solid rgba(201,168,76,0.2); position: relative; overflow: hidden; }
+  .engagement-message::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, transparent, var(--gold), transparent); opacity: 0.6; }
+  .engagement-star { font-size: 1.5rem; color: var(--gold); margin-bottom: 1.5rem; display: block; opacity: 0.7; animation: starPulse 3s ease-in-out infinite; }
+  @keyframes starPulse { 0%,100%{opacity:0.4;transform:scale(1)} 50%{opacity:1;transform:scale(1.15)} }
+  .engagement-title { font-family: var(--serif); font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.8rem); line-height: 1.2; margin-bottom: 1.5rem; }
+  .engagement-title em { color: var(--gold); font-style: italic; }
+  .engagement-body { font-family: var(--serif); font-size: 1rem; color: var(--text-muted); line-height: 1.9; margin-bottom: 1rem; }
+  .engagement-body strong { color: var(--star-white); font-weight: 400; }
+  .engagement-divider { width: 60px; height: 1px; background: var(--gold-dim); margin: 2rem 0; opacity: 0.5; }
+  .engagement-quote { font-family: var(--serif); font-style: italic; font-size: clamp(1rem, 2vw, 1.2rem); color: var(--star-white); line-height: 1.8; margin-bottom: 1rem; padding-left: 1.5rem; border-left: 2px solid var(--gold-dim); }
+  .engagement-quote em { color: var(--gold); }
+  .engagement-sign { font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em; color: var(--gold); text-transform: uppercase; margin-top: 0.5rem; }
+
+  /* ── SUBMIT WRAP + SABER ── */
+  .submit-wrap { position: relative; display: inline-block; }
+  .saber-canvas { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; z-index: 10; }
+
+  /* ── HYPERSPACE ── */
+  #hyperspace-overlay { display: none; position: fixed; inset: 0; z-index: 9999; background: #000; overflow: hidden; }
+  #hyperspace-overlay.active { display: block; }
+  #hyperspace-canvas { position: absolute; inset: 0; }
+
+  /* ── SUCCESS ── */
+  .success-screen { display: none; text-align: center; padding: 6rem 2rem; position: relative; z-index: 1; }
+  .success-screen.visible { display: block; animation: fadeUp 0.8s ease forwards; }
+  .success-logo { margin-bottom: 2rem; }
+  .success-logo img { animation: logoShimmer 2.5s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(201,168,76,0.4)); }
+  @keyframes logoShimmer {
+    0%,100% { filter: drop-shadow(0 0 15px rgba(201,168,76,0.3)) drop-shadow(0 0 35px rgba(201,168,76,0.1)); opacity: 0.85; }
+    50% { filter: drop-shadow(0 0 30px rgba(201,168,76,0.7)) drop-shadow(0 0 60px rgba(201,168,76,0.3)); opacity: 1; }
+  }
+  .success-title { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 1rem; }
+  .success-title em { color: var(--gold); font-style: italic; }
+  .success-sub { font-family: var(--serif); font-size: 1.05rem; color: var(--text-muted); line-height: 1.9; max-width: 500px; margin: 0 auto 3rem; }
+  .success-back { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; background: transparent; color: var(--gold); border: 1px solid var(--gold-dim); cursor: pointer; padding: 0.9rem 2rem; text-transform: uppercase; text-decoration: none; display: inline-block; transition: border-color 0.3s, box-shadow 0.4s; }
+  .success-back:hover { border-color: var(--gold); box-shadow: 0 0 14px rgba(201,168,76,0.35); }
+
+  /* ── FOOTER ── */
+  footer { position: relative; z-index: 1; border-top: 1px solid rgba(201,168,76,0.12); padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em; color: var(--text-muted); text-transform: uppercase; }
+  footer span { color: var(--gold); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%,100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-back-text { display: none; }
+    .hamburger { display: flex; }
+    .page-hero { grid-template-columns: 1fr; padding: 10rem 1.5rem 3rem; gap: 2rem; }
+    .hero-right { flex-direction: row; align-items: center; justify-content: flex-start; }
+    .hero-stat { text-align: left; }
+    .type-selector { padding: 0 1.5rem 3rem; }
+    .type-cards { grid-template-columns: 1fr; }
+    .steps-inner { grid-template-columns: repeat(3, 1fr); padding: 0 1rem; }
+    .step { padding-left: 0.5rem; gap: 0.4rem; }
+    .step-label { font-size: 8px; }
+    .form-container { padding: 3rem 1.5rem 5rem; }
+    .fields-grid, .fields-grid.triple { grid-template-columns: 1fr; gap: 1.2rem; }
+    .recap-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+</head>
+<body>
+
+<canvas id="star-canvas"></canvas>
+
+<!-- ══ LOGO DJUM WATERMARK ══ -->
+<div id="djum-watermark" style="position:fixed;bottom:2rem;right:2.5rem;z-index:2;pointer-events:none;opacity:0.08;">
+  <svg style="width:80px;display:block" viewBox="0 0 200 85" xmlns="http://www.w3.org/2000/svg">
+    <text x="12" y="22" font-family="Georgia,serif" font-style="italic" font-size="19" fill="#C9A84C">Just</text>
+    <text x="2" y="68" font-family="Impact,'Arial Black',sans-serif" font-size="52" letter-spacing="3" fill="#F0EEE6">DJUM</text>
+    <text x="8" y="80" font-family="Arial,sans-serif" font-size="8.5" letter-spacing="5" fill="#C9A84C">PERFORMANCE</text>
+  </svg>
+</div>
+
+<nav>
+  <a class="logo" href="index.html">DJUMPERFORMANCE</a>
+  <a class="nav-back" href="index.html"><span class="nav-back-text">Retour</span></a>
+  <button class="hamburger" onclick="openMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMenu()">✕</button>
+  <a href="index.html" onclick="closeMenu()">Accueil</a>
+  <a href="index.html#projets" onclick="closeMenu()">Projets</a>
+  <a href="index.html#rejoindre" onclick="closeMenu()">Rejoindre</a>
+  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- ── HERO ── -->
+<div class="page-hero" id="page-hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Candidature — Équipe</div>
+    <h1 class="page-title">Rejoindre<br><em>l'équipe.</em></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">
+      Derrière la caméra, chaque talent construit le film.
+      Choisis ton profil et rejoins l'aventure.
+    </p>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">Profils</div></div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat"><div class="hero-stat-num">~5'</div><div class="hero-stat-label">À remplir</div></div>
+  </div>
+</div>
+
+<!-- ── TYPE SELECTOR ── -->
+<div class="type-selector" id="type-selector">
+  <div class="type-eyebrow">Quel est votre profil ?</div>
+  <h2 class="type-title">Choisissez votre<br><em>discipline.</em></h2>
+  <div class="type-cards">
+    <div class="type-card" data-type="image-son" onclick="selectType(event,'image-son')">
+      <span class="type-card-num">A — Image & Son</span>
+      <h3>DOP · Cadreur · Son</h3>
+      <p>Directeur photo, cadreur, électricien, ingénieur son, perchiste, steadicam, drone.</p>
+    </div>
+    <div class="type-card" data-type="plateau" onclick="selectType(event,'plateau')">
+      <span class="type-card-num">B — Plateau & Coordination</span>
+      <h3>1er AD · Script · Régie</h3>
+      <p>Premier assistant, script, régisseur, machiniste, accessoiriste. Vous faites tenir le plateau.</p>
+    </div>
+    <div class="type-card" data-type="artistique" onclick="selectType(event,'artistique')">
+      <span class="type-card-num">C — Artistique & Apparence</span>
+      <h3>Maquillage · Costume · Déco</h3>
+      <p>Maquilleur·euse, coiffeur·euse, costumier·ère, chef déco. Vous créez l'univers visuel.</p>
+    </div>
+    <div class="type-card" data-type="post-prod" onclick="selectType(event,'post-prod')">
+      <span class="type-card-num">D — Post-production</span>
+      <h3>Montage · Étalonnage · VFX</h3>
+      <p>Monteur, étalonneur, mixeur son, VFX/motion, compositeur. Le film naît ici.</p>
+    </div>
+    <div class="type-card" data-type="autre" onclick="selectType(event,'autre')">
+      <span class="type-card-num">E — Autre profil</span>
+      <h3>Autre discipline</h3>
+      <p>Votre compétence ne rentre dans aucune case ? On aime les profils rares.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── STEPS BAR ── -->
+<div class="steps-bar" id="steps-bar">
+  <div class="steps-inner">
+    <div class="step active" id="step-tab-1" onclick="goToStep(1)">
+      <div class="step-num">01</div>
+      <div class="step-label">Identité</div>
+    </div>
+    <div class="step" id="step-tab-2" onclick="goToStep(2)">
+      <div class="step-num">02</div>
+      <div class="step-label">Spécialité</div>
+    </div>
+    <div class="step" id="step-tab-3" onclick="goToStep(3)">
+      <div class="step-num">03</div>
+      <div class="step-label">Récapitulatif</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FORM ── -->
+<div class="form-container" id="form-container">
+  <form id="candidature-form" novalidate>
+
+    <!-- ÉTAPE 1 — IDENTITÉ -->
+    <div class="form-section active" id="section-1">
+      <div class="section-heading"><div class="label">Étape 01</div><h2>Qui <em>êtes-vous ?</em></h2></div>
+      <div class="fields-grid">
+        <div class="field"><label class="field-label" for="prenom">Prénom <span class="required">*</span></label><input class="field-input" type="text" id="prenom" name="prenom" placeholder="Votre prénom" required></div>
+        <div class="field"><label class="field-label" for="nom">Nom <span class="required">*</span></label><input class="field-input" type="text" id="nom" name="nom" placeholder="Votre nom" required></div>
+        <div class="field"><label class="field-label" for="email">Email <span class="required">*</span></label><input class="field-input" type="email" id="email" name="email" placeholder="votre@email.com" required></div>
+        <div class="field"><label class="field-label" for="telephone">Téléphone</label><input class="field-input" type="tel" id="telephone" name="telephone" placeholder="+33 6 00 00 00 00"></div>
+        <div class="field"><label class="field-label" for="age">Âge <span class="required">*</span></label><input class="field-input" type="number" id="age" name="age" placeholder="Votre âge" min="16" max="99" required></div>
+        <div class="field">
+          <label class="field-label" for="ville">Ville / Localisation <span class="required">*</span></label>
+          <div style="position:relative">
+            <input class="field-input" type="text" id="ville" name="ville" placeholder="Paris, Lyon, Marseille..." required autocomplete="off">
+            <ul id="ville-suggestions" style="position:absolute;z-index:999;width:100%;background:#0B0D14;border:1px solid rgba(201,168,76,0.25);list-style:none;margin:0;padding:0;max-height:200px;overflow-y:auto;display:none;"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="form-nav">
+        <button type="button" class="btn-prev" onclick="resetType()">Changer profil</button>
+        <div style="display:flex;align-items:center;gap:2rem;">
+          <span class="step-counter">Étape <span>1</span> / 3</span>
+          <button type="button" class="btn-next" onclick="nextStep(1)">Suivant</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 2 — SPÉCIALITÉ -->
+    <div class="form-section" id="section-2">
+      <div class="section-heading"><div class="label">Étape 02</div><h2 id="step2-title">Votre <em>spécialité.</em></h2></div>
+
+      <!-- PROFIL A — IMAGE & SON -->
+      <div class="profile-block" id="profile-image-son">
+        <div class="fields-grid">
+          <div class="field"><label class="field-label" for="a-poste">Poste exact <span class="required">*</span></label>
+            <select class="field-select" id="a-poste" data-required>
+              <option value="" disabled selected>Choisir...</option>
+              <option value="DOP/Directeur photo">DOP / Directeur photo</option>
+              <option value="Cadreur">Cadreur·euse</option>
+              <option value="Chef électricien">Chef électricien·ne</option>
+              <option value="Ingénieur son">Ingénieur·e son</option>
+              <option value="Perchiste">Perchiste</option>
+              <option value="Opérateur steadicam">Opérateur steadicam</option>
+              <option value="Pilote drone">Pilote drone</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+          <div class="field"><label class="field-label" for="a-experience">Expérience <span class="required">*</span></label>
+            <select class="field-select" id="a-experience" data-required>
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Débutant">Débutant</option>
+              <option value="Intermédiaire">Intermédiaire</option>
+              <option value="Confirmé">Confirmé</option>
+              <option value="Professionnel">Professionnel</option>
+            </select>
+          </div>
+        </div>
+        <div class="fields-grid single">
+          <div class="field"><label class="field-label">Matériel possédé</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox" name="a-materiel" value="Caméra pro"><span class="checkbox-box"></span><span class="checkbox-label">Caméra pro</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="a-materiel" value="Kit son"><span class="checkbox-box"></span><span class="checkbox-label">Kit son</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="a-materiel" value="Steadicam/Gimbal"><span class="checkbox-box"></span><span class="checkbox-label">Steadicam/Gimbal</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="a-materiel" value="Drone"><span class="checkbox-box"></span><span class="checkbox-label">Drone</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="a-materiel" value="Éclairage"><span class="checkbox-box"></span><span class="checkbox-label">Éclairage</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="a-materiel" value="Logiciels montage"><span class="checkbox-box"></span><span class="checkbox-label">Logiciels montage</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1.5rem;">
+          <div class="field"><label class="field-label" for="a-showreel">Showreel <span class="required">*</span></label><input class="field-input" type="url" id="a-showreel" data-required data-url placeholder="https://vimeo.com/..."></div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1rem;">
+          <div class="field"><label class="field-label" for="a-experiences">Expérience productions</label><textarea class="field-textarea" id="a-experiences" placeholder="Films, clips sur lesquels vous avez travaillé..."></textarea></div>
+        </div>
+        <div class="fields-grid" style="margin-top:1.5rem;">
+          <div class="field"><label class="field-label" for="a-dispo">Disponibilité <span class="required">*</span></label>
+            <select class="field-select" id="a-dispo" data-required>
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Immédiate">Immédiate</option>
+              <option value="Dans 1 mois">Dans 1 mois</option>
+              <option value="Dans 2-3 mois">Dans 2-3 mois</option>
+              <option value="Flexible">Flexible / À discuter</option>
+            </select>
+          </div>
+          <div class="field"><label class="field-label" for="a-mobilite">Mobilité</label>
+            <select class="field-select" id="a-mobilite">
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Ma ville uniquement">Ma ville uniquement</option>
+              <option value="Région parisienne">Région parisienne</option>
+              <option value="France entière">France entière</option>
+              <option value="Internationale">Internationale</option>
+            </select>
+          </div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1rem;">
+          <div class="field"><label class="field-label" for="a-message">Message</label><textarea class="field-textarea" id="a-message" placeholder="Tout ce que vous souhaitez ajouter..."></textarea></div>
+        </div>
+      </div>
+
+      <!-- PROFIL B — PLATEAU -->
+      <div class="profile-block" id="profile-plateau">
+        <div class="fields-grid">
+          <div class="field"><label class="field-label" for="b-poste">Poste exact <span class="required">*</span></label>
+            <select class="field-select" id="b-poste" data-required>
+              <option value="" disabled selected>Choisir...</option>
+              <option value="1er Assistant réalisation">1er Assistant réalisation</option>
+              <option value="2e Assistant réalisation">2e Assistant réalisation</option>
+              <option value="Script/Continuité">Script / Continuité</option>
+              <option value="Régisseur">Régisseur·euse</option>
+              <option value="Chef machiniste">Chef machiniste</option>
+              <option value="Accessoiriste">Accessoiriste</option>
+              <option value="Directeur casting">Directeur·rice casting</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+          <div class="field"><label class="field-label" for="b-experience">Expérience <span class="required">*</span></label>
+            <select class="field-select" id="b-experience" data-required>
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Débutant">Débutant</option>
+              <option value="Intermédiaire">Intermédiaire</option>
+              <option value="Confirmé">Confirmé</option>
+              <option value="Professionnel">Professionnel</option>
+            </select>
+          </div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1rem;">
+          <div class="field"><label class="field-label" for="b-productions">Productions déjà travaillées <span class="required">*</span></label><textarea class="field-textarea" id="b-productions" data-required placeholder="Titre, année, votre rôle exact..."></textarea></div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1.5rem;">
+          <div class="field"><label class="field-label">Logiciels</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox" name="b-logiciels" value="Movie Magic"><span class="checkbox-box"></span><span class="checkbox-label">Movie Magic</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="b-logiciels" value="Celtx"><span class="checkbox-box"></span><span class="checkbox-label">Celtx</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="b-logiciels" value="StudioBinder"><span class="checkbox-box"></span><span class="checkbox-label">StudioBinder</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="b-logiciels" value="Final Draft"><span class="checkbox-box"></span><span class="checkbox-label">Final Draft</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="b-logiciels" value="Google Drive"><span class="checkbox-box"></span><span class="checkbox-label">Google Drive</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="b-logiciels" value="Autre"><span class="checkbox-box"></span><span class="checkbox-label">Autre</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="fields-grid" style="margin-top:1.5rem;">
+          <div class="field"><label class="field-label" for="b-mobilite">Mobilité <span class="required">*</span></label>
+            <select class="field-select" id="b-mobilite" data-required>
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Ma ville uniquement">Ma ville uniquement</option>
+              <option value="Région parisienne">Région parisienne</option>
+              <option value="France entière">France entière</option>
+              <option value="Internationale">Internationale</option>
+            </select>
+          </div>
+          <div class="field"><label class="field-label" for="b-dispo">Disponibilité <span class="required">*</span></label>
+            <select class="field-select" id="b-dispo" data-required>
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Immédiate">Immédiate</option>
+              <option value="Dans 1 mois">Dans 1 mois</option>
+              <option value="Dans 2-3 mois">Dans 2-3 mois</option>
+              <option value="Flexible">Flexible / À discuter</option>
+            </select>
+          </div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1rem;">
+          <div class="field"><label class="field-label" for="b-message">Message</label><textarea class="field-textarea" id="b-message" placeholder="Tout ce que vous souhaitez ajouter..."></textarea></div>
+        </div>
+      </div>
+
+      <!-- PROFIL C — ARTISTIQUE -->
+      <div class="profile-block" id="profile-artistique">
+        <div class="fields-grid">
+          <div class="field"><label class="field-label" for="c-poste">Poste exact <span class="required">*</span></label>
+            <select class="field-select" id="c-poste" data-required>
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Maquilleur">Maquilleur·euse</option>
+              <option value="Chef coiffeur">Chef·fe coiffeur·euse</option>
+              <option value="Costumier">Costumier·ère</option>
+              <option value="Chef décorateur">Chef décorateur·rice</option>
+              <option value="Accessoiriste artistique">Accessoiriste artistique</option>
+              <option value="Effets spéciaux maquillage">Effets spéciaux maquillage</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+          <div class="field"><label class="field-label" for="c-experience">Expérience</label>
+            <select class="field-select" id="c-experience">
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Débutant">Débutant</option>
+              <option value="Intermédiaire">Intermédiaire</option>
+              <option value="Confirmé">Confirmé</option>
+              <option value="Professionnel">Professionnel</option>
+            </select>
+          </div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1.5rem;">
+          <div class="field"><label class="field-label">Spécialités</label>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox" name="c-specialites" value="Maquillage FX"><span class="checkbox-box"></span><span class="checkbox-label">Maquillage FX</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="c-specialites" value="Période historique"><span class="checkbox-box"></span><span class="checkbox-label">Période historique</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="c-specialites" value="Coiffure de période"><span class="checkbox-box"></span><span class="checkbox-label">Coiffure de période</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="c-specialites" value="Création costumes"><span class="checkbox-box"></span><span class="checkbox-label">Création costumes</span></label>
+              <label class="checkbox-item"><input type="checkbox" name="c-specialites" value="Décoration plateau"><span class="checkbox-box"></span><span class="checkbox-label">Décoration plateau</span></label>
+            </div>
+          </div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1.5rem;">
+          <div class="field"><label class="field-label" for="c-portfolio">Portfolio photos <span class="required">*</span></label><input class="field-input" type="url" id="c-portfolio" data-required data-url placeholder="Drive, Pinterest, Instagram pro, site perso..."></div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1rem;">
+          <div class="field"><label class="field-label" for="c-experiences">Expérience</label><textarea class="field-textarea" id="c-experiences" placeholder="Productions, clients, projets sur lesquels vous avez travaillé..."></textarea></div>
+        </div>
+        <div class="fields-grid" style="margin-top:1.5rem;">
+          <div class="field"><label class="field-label" for="c-dispo">Disponibilité <span class="required">*</span></label>
+            <select class="field-select" id="c-dispo" data-required>
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Immédiate">Immédiate</option>
+              <option value="Dans 1 mois">Dans 1 mois</option>
+              <option value="Dans 2-3 mois">Dans 2-3 mois</option>
+              <option value="Flexible">Flexible / À discuter</option>
+            </select>
+          </div>
+          <div class="field"><label class="field-label" for="c-mobilite">Mobilité</label>
+            <select class="field-select" id="c-mobilite">
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Ma ville uniquement">Ma ville uniquement</option>
+              <option value="Région parisienne">Région parisienne</option>
+              <option value="France entière">France entière</option>
+              <option value="Internationale">Internationale</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFIL D — POST-PROD -->
+      <div class="profile-block" id="profile-post-prod">
+        <div class="fields-grid">
+          <div class="field"><label class="field-label" for="d-poste">Poste exact <span class="required">*</span></label>
+            <select class="field-select" id="d-poste" data-required>
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Monteur">Monteur·euse</option>
+              <option value="Étalonneur">Étalonneur·euse</option>
+              <option value="Mixeur son">Mixeur·euse son</option>
+              <option value="Motion designer/VFX">Motion designer / VFX</option>
+              <option value="Compositeur">Compositeur·rice</option>
+              <option value="Coloriste">Coloriste</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+          <div class="field"><label class="field-label" for="d-experience">Expérience</label>
+            <select class="field-select" id="d-experience">
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Débutant">Débutant</option>
+              <option value="Intermédiaire">Intermédiaire</option>
+              <option value="Confirmé">Confirmé</option>
+              <option value="Professionnel">Professionnel</option>
+            </select>
+          </div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1.5rem;">
+          <div class="field"><label class="field-label">Logiciels maîtrisés <span class="required">*</span></label>
+            <div class="checkbox-wrap" id="d-logiciels-wrap">
+              <div class="checkbox-group">
+                <label class="checkbox-item"><input type="checkbox" name="d-logiciels" value="Premiere Pro"><span class="checkbox-box"></span><span class="checkbox-label">Premiere Pro</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="d-logiciels" value="DaVinci Resolve"><span class="checkbox-box"></span><span class="checkbox-label">DaVinci Resolve</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="d-logiciels" value="Final Cut Pro"><span class="checkbox-box"></span><span class="checkbox-label">Final Cut Pro</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="d-logiciels" value="After Effects"><span class="checkbox-box"></span><span class="checkbox-label">After Effects</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="d-logiciels" value="Nuke"><span class="checkbox-box"></span><span class="checkbox-label">Nuke</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="d-logiciels" value="Pro Tools"><span class="checkbox-box"></span><span class="checkbox-label">Pro Tools</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="d-logiciels" value="Logic Pro"><span class="checkbox-box"></span><span class="checkbox-label">Logic Pro</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="d-logiciels" value="Ableton Live"><span class="checkbox-box"></span><span class="checkbox-label">Ableton Live</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="d-logiciels" value="Audition"><span class="checkbox-box"></span><span class="checkbox-label">Audition</span></label>
+                <label class="checkbox-item"><input type="checkbox" name="d-logiciels" value="Autre"><span class="checkbox-box"></span><span class="checkbox-label">Autre</span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1.5rem;">
+          <div class="field"><label class="field-label" for="d-extrait">Extrait de travaux <span class="required">*</span></label><input class="field-input" type="url" id="d-extrait" data-required data-url placeholder="Vimeo, YouTube, Drive..."></div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1rem;">
+          <div class="field"><label class="field-label" for="d-experiences">Expérience</label><textarea class="field-textarea" id="d-experiences" placeholder="Projets sur lesquels vous avez travaillé..."></textarea></div>
+        </div>
+        <div class="fields-grid" style="margin-top:1.5rem;">
+          <div class="field"><label class="field-label" for="d-dispo">Disponibilité <span class="required">*</span></label>
+            <select class="field-select" id="d-dispo" data-required>
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Immédiate">Immédiate</option>
+              <option value="Dans 1 mois">Dans 1 mois</option>
+              <option value="Dans 2-3 mois">Dans 2-3 mois</option>
+              <option value="Flexible">Flexible / À discuter</option>
+            </select>
+          </div>
+          <div class="field"><label class="field-label" for="d-teletravail">Télétravail</label>
+            <select class="field-select" id="d-teletravail">
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Oui">Oui</option>
+              <option value="Non">Non</option>
+              <option value="Hybride">Hybride</option>
+            </select>
+          </div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1rem;">
+          <div class="field"><label class="field-label" for="d-message">Message</label><textarea class="field-textarea" id="d-message" placeholder="Tout ce que vous souhaitez ajouter..."></textarea></div>
+        </div>
+      </div>
+
+      <!-- PROFIL E — AUTRE -->
+      <div class="profile-block" id="profile-autre">
+        <div class="fields-grid single">
+          <div class="field"><label class="field-label" for="e-discipline">Votre discipline <span class="required">*</span></label><input class="field-input" type="text" id="e-discipline" data-required placeholder="Ex: Coach vocal, Consultant historique..."></div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1.5rem;">
+          <div class="field"><label class="field-label" for="e-apport">Description de votre apport <span class="required">*</span></label><textarea class="field-textarea" id="e-apport" data-required style="min-height:150px;" placeholder="Comment pourriez-vous contribuer à une production ?"></textarea></div>
+        </div>
+        <div class="fields-grid single" style="margin-top:1.5rem;">
+          <div class="field"><label class="field-label" for="e-portfolio">Portfolio / Référence (optionnel)</label><input class="field-input" type="url" id="e-portfolio" data-url placeholder="https://..."></div>
+        </div>
+        <div class="fields-grid" style="margin-top:1.5rem;">
+          <div class="field"><label class="field-label" for="e-dispo">Disponibilité <span class="required">*</span></label>
+            <select class="field-select" id="e-dispo" data-required>
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Immédiate">Immédiate</option>
+              <option value="Dans 1 mois">Dans 1 mois</option>
+              <option value="Dans 2-3 mois">Dans 2-3 mois</option>
+              <option value="Flexible">Flexible / À discuter</option>
+            </select>
+          </div>
+          <div class="field"><label class="field-label" for="e-mobilite">Mobilité</label>
+            <select class="field-select" id="e-mobilite">
+              <option value="" disabled selected>Choisir...</option>
+              <option value="Ma ville uniquement">Ma ville uniquement</option>
+              <option value="Région parisienne">Région parisienne</option>
+              <option value="France entière">France entière</option>
+              <option value="Internationale">Internationale</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-nav">
+        <button type="button" class="btn-prev" onclick="prevStep(2)">Précédent</button>
+        <div style="display:flex;align-items:center;gap:2rem;">
+          <span class="step-counter">Étape <span>2</span> / 3</span>
+          <button type="button" class="btn-next" onclick="nextStep(2)">Récapitulatif</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 3 — RÉCAPITULATIF -->
+    <div class="form-section" id="section-3">
+      <div class="section-heading"><div class="label">Étape 03</div><h2>Vérifiez votre <em>candidature.</em></h2></div>
+      <div class="recap-grid" id="recap-content"></div>
+
+      <!-- ══ ENGAGEMENT ══ -->
+      <div class="engagement-message">
+        <div class="engagement-star">✦</div>
+        <h3 class="engagement-title">Avant d'envoyer — <em>quelques mots importants.</em></h3>
+        <p class="engagement-body">
+          DJUMPERFORMANCE est une maison de production <strong>indépendante et non commerciale</strong> à ce stade de son développement. Les projets ne sont <strong>pas rémunérés financièrement.</strong>
+        </p>
+        <p class="engagement-body">
+          Ce que nous offrons : <strong>l'expérience d'un tournage cinématographique réel</strong>, une œuvre collective, et la fierté de faire partie d'une aventure qui grandit.
+        </p>
+        <div class="engagement-divider"></div>
+        <p class="engagement-quote">
+          « La seule rémunération sérieuse que nous pouvons vous promettre, c'est <em>l'amour du cinéma, la passion de créer, et la fierté d'avoir osé.</em> »
+        </p>
+        <p class="engagement-sign">— DJUMPERFORMANCE</p>
+      </div>
+
+      <div style="margin-top:2rem;padding:1.5rem 2rem;background:var(--bg2);border:1px solid rgba(201,168,76,0.12);">
+        <label class="checkbox-item" style="gap:1rem;">
+          <input type="checkbox" id="consent" required onchange="checkUnlock()">
+          <span class="checkbox-box"></span>
+          <span style="font-family:var(--serif);font-size:0.9rem;color:var(--text-muted);line-height:1.7;cursor:pointer;">
+            J'ai lu et j'accepte les conditions de participation. Je comprends que ce projet est non rémunéré et j'y adhère librement, par amour du cinéma.
+          </span>
+        </label>
+      </div>
+
+      <div style="margin-top:1.5rem;">
+        <div class="h-captcha"
+          data-sitekey="50b2fe65-b00b-4b9e-ad62-3ba471098be2"
+          data-callback="checkUnlock"
+          data-expired-callback="checkUnlock"
+          style="margin-bottom:1.5rem;">
+        </div>
+      </div>
+
+      <div class="form-nav">
+        <button type="button" class="btn-prev" onclick="prevStep(3)">Modifier</button>
+        <div style="display:flex;align-items:center;gap:2rem;">
+          <span class="step-counter">Étape <span>3</span> / 3</span>
+          <div class="submit-wrap" id="submit-wrap">
+            <canvas class="saber-canvas" id="saber-canvas"></canvas>
+            <button type="button" class="btn-submit" id="btn-submit" onclick="submitForm()" disabled style="opacity:0.35;cursor:not-allowed;pointer-events:none;">Envoyer ma candidature</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-logo">
+      <img src="favicon-512.png" alt="DJUMPERFORMANCE" style="width:120px;height:120px;display:block;margin:0 auto;">
+    </div>
+    <h2 class="success-title">Candidature<br><em>envoyée.</em></h2>
+    <p class="success-sub">
+      Merci pour votre confiance. Nous étudions chaque candidature avec soin et reviendrons vers vous dans les meilleurs délais.
+    </p>
+    <a class="success-back" href="index.html">← Retour à l'accueil</a>
+  </div>
+</div>
+
+<!-- ══ OVERLAY HYPERESPACE ══ -->
+<div id="hyperspace-overlay"><canvas id="hyperspace-canvas"></canvas></div>
+
+<footer>
+  <div>&copy; 2025 <span>DJUMPERFORMANCE</span> — Tous droits réservés</div>
+  <div style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;">Candidature Équipe — 02 / 03</div>
+</footer>
+
+<script>
+  emailjs.init({ publicKey: 'xRpuCjl2EzAsn1xKN' });
+
+  // ── Menu mobile
+  function openMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // ── Canvas étoilé
+  const canvas = document.getElementById('star-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [], W, H;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function initStars() {
+    stars = [];
+    const count = Math.floor((W * H) / 1800);
+    for (let i = 0; i < count; i++) {
+      const rnd = Math.random();
+      stars.push({
+        x: Math.random()*W, y: Math.random()*H,
+        r: rnd < 0.7 ? Math.random()*0.8+0.2 : rnd < 0.92 ? Math.random()*0.8+0.9 : Math.random()*0.6+1.6,
+        f1: Math.random()*0.4+0.05, f2: Math.random()*2.0+0.8, f3: Math.random()*5.0+2.0,
+        p1: Math.random()*100, p2: Math.random()*100, p3: Math.random()*100,
+        a1: Math.random()*0.3+0.1, a2: Math.random()*0.25+0.05, a3: Math.random()*0.12,
+        base: Math.random()*0.25+0.05,
+        flashTimer: Math.random()*800, flashDur: Math.random()*60+20, flashInt: 0,
+        gold: Math.random()<0.07, bright: rnd > 0.88
+      });
+    }
+  }
+  function drawStars(t) {
+    ctx.clearRect(0,0,W,H);
+    for (const s of stars) {
+      const slow = Math.sin(t*s.f1+s.p1)*s.a1;
+      const fast = Math.sin(t*s.f2+s.p2)*s.a2;
+      const micro = Math.sin(t*s.f3+s.p3)*s.a3;
+      s.flashTimer -= 1;
+      if (s.flashTimer <= 0) { s.flashTimer = Math.random()*600+200; s.flashInt = s.bright ? 0.7 : 0.4; s.flashDur = Math.random()*40+10; }
+      let flash = 0;
+      if (s.flashInt > 0) { flash = s.flashInt; s.flashInt -= s.flashInt/s.flashDur; if (s.flashInt < 0.01) s.flashInt = 0; }
+      let a = Math.max(0, Math.min(1, s.base+slow+fast+micro+flash));
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      if (s.gold) {
+        ctx.fillStyle = `rgba(201,168,76,${a})`; ctx.fill();
+        if (a > 0.55 && s.r > 1) { ctx.beginPath(); ctx.arc(s.x,s.y,s.r*3,0,Math.PI*2); ctx.fillStyle = `rgba(201,168,76,${(a-0.55)*0.15})`; ctx.fill(); }
+      } else {
+        ctx.fillStyle = `rgba(240,238,230,${a})`; ctx.fill();
+        if (a > 0.65 && s.r > 1.4) { ctx.beginPath(); ctx.arc(s.x,s.y,s.r*2.8,0,Math.PI*2); ctx.fillStyle = `rgba(240,238,230,${(a-0.65)*0.12})`; ctx.fill(); }
+      }
+    }
+  }
+  function loop(ts) { drawStars(ts*0.001); requestAnimationFrame(loop); }
+  resize(); initStars();
+  window.addEventListener('resize', () => { resize(); initStars(); });
+  requestAnimationFrame(loop);
+
+  // ══ WATERMARK SCINTILLEMENT ══
+  const wmEl = document.getElementById('djum-watermark');
+  let wmT2 = 0;
+  function animWM() { wmT2 += 0.007; wmEl.style.opacity = (0.06 + Math.sin(wmT2)*0.025).toFixed(3); requestAnimationFrame(animWM); }
+  animWM();
+
+  // ── TYPE LABELS
+  const TYPE_LABELS = {
+    'image-son':   'Image & Son',
+    'plateau':     'Plateau & Coordination',
+    'artistique':  'Artistique & Apparence',
+    'post-prod':   'Post-production',
+    'autre':       'Autre profil'
+  };
+  const TYPE_PREFIX = {
+    'image-son':  'a',
+    'plateau':    'b',
+    'artistique': 'c',
+    'post-prod':  'd',
+    'autre':      'e'
+  };
+
+  let selectedType = null;
+  let currentStep = 1;
+
+  // ── PURE RENDER (sans toucher à l'historique)
+  function renderSelector() {
+    selectedType = null;
+    document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('page-hero').style.display = 'grid';
+    document.getElementById('type-selector').style.display = 'block';
+    document.getElementById('steps-bar').classList.remove('visible');
+    document.getElementById('form-container').classList.remove('visible');
+    renderStep(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderForm(type) {
+    selectedType = type;
+    document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+    const card = document.querySelector(`.type-card[data-type="${type}"]`);
+    if (card) card.classList.add('selected');
+
+    document.querySelectorAll('.profile-block').forEach(b => b.classList.remove('active'));
+    document.getElementById(`profile-${type}`).classList.add('active');
+    document.getElementById('step2-title').innerHTML = `Profil <em>${TYPE_LABELS[type]}.</em>`;
+
+    document.getElementById('page-hero').style.display = 'none';
+    document.getElementById('type-selector').style.display = 'none';
+    document.getElementById('steps-bar').classList.add('visible');
+    document.getElementById('form-container').classList.add('visible');
+    renderStep(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderStep(n) {
+    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+    document.getElementById(`section-${n}`).classList.add('active');
+    document.querySelectorAll('.step').forEach((s, i) => {
+      s.classList.remove('active','done');
+      if (i+1 < n) s.classList.add('done');
+      if (i+1 === n) s.classList.add('active');
+    });
+    currentStep = n;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── ACTIONS UTILISATEUR (mettent à jour l'historique)
+  function selectType(e, type) {
+    selectedType = type;
+    document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+    e.currentTarget.classList.add('selected');
+    document.querySelectorAll('.profile-block').forEach(b => b.classList.remove('active'));
+    document.getElementById(`profile-${type}`).classList.add('active');
+    document.getElementById('step2-title').innerHTML = `Profil <em>${TYPE_LABELS[type]}.</em>`;
+
+    setTimeout(() => {
+      document.getElementById('page-hero').style.display = 'none';
+      document.getElementById('type-selector').style.display = 'none';
+      document.getElementById('steps-bar').classList.add('visible');
+      document.getElementById('form-container').classList.add('visible');
+      renderStep(1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      history.pushState({ view: 'form', type }, '', `?profil=${type}`);
+    }, 300);
+  }
+
+  function resetType() {
+    renderSelector();
+    history.pushState({ view: 'selector' }, '', window.location.pathname);
+  }
+
+  function goToStep(n) {
+    if (n > currentStep) return;
+    showStep(n);
+  }
+
+  function showStep(n) {
+    renderStep(n);
+    history.pushState({ view: 'step', type: selectedType, step: n }, '', `?profil=${selectedType}&etape=${n}`);
+  }
+
+  // ── HISTORIQUE NAVIGATEUR
+  window.addEventListener('popstate', (e) => {
+    const s = e.state;
+    if (!s || s.view === 'selector') {
+      renderSelector();
+    } else if (s.view === 'form') {
+      renderForm(s.type);
+    } else if (s.view === 'step') {
+      renderForm(s.type);
+      renderStep(s.step);
+    }
+  });
+  history.replaceState({ view: 'selector' }, '', window.location.pathname);
+
+  function isValidUrl(v) {
+    try {
+      const u = new URL(v);
+      return u.protocol === 'http:' || u.protocol === 'https:';
+    } catch(e) { return false; }
+  }
+
+  function clearError(el, errId) {
+    el.style.borderColor = '';
+    const errMsg = document.getElementById(errId);
+    if (errMsg) errMsg.remove();
+  }
+  function showError(el, errId, text) {
+    el.style.borderColor = 'rgba(220,80,80,0.6)';
+    let errMsg = document.getElementById(errId);
+    if (!errMsg) {
+      errMsg = document.createElement('div');
+      errMsg.id = errId;
+      errMsg.style.cssText = 'font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:rgba(220,80,80,0.8);margin-top:4px;';
+      errMsg.textContent = text;
+      el.parentElement.appendChild(errMsg);
+    }
+  }
+
+  function validateStep(n) {
+    let valid = true;
+
+    if (n === 1) {
+      const required = document.getElementById('section-1').querySelectorAll('[required]');
+      required.forEach(f => {
+        f.style.borderColor = '';
+        if (!f.value.trim()) { f.style.borderColor = 'rgba(220,80,80,0.6)'; valid = false; }
+      });
+      const emailField = document.getElementById('email');
+      const emailVal = emailField.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailVal && !emailRegex.test(emailVal)) {
+        showError(emailField, 'email-error', 'Format invalide — ex: prenom@exemple.com');
+        valid = false;
+      } else {
+        clearError(emailField, 'email-error');
+      }
+    }
+
+    if (n === 2) {
+      const block = document.getElementById(`profile-${selectedType}`);
+      // Champs data-required
+      block.querySelectorAll('[data-required]').forEach(f => {
+        f.style.borderColor = '';
+        if (!f.value.trim()) { f.style.borderColor = 'rgba(220,80,80,0.6)'; valid = false; }
+      });
+      // Validation URL
+      block.querySelectorAll('[data-url]').forEach(f => {
+        const v = f.value.trim();
+        if (v && !isValidUrl(v)) {
+          showError(f, f.id + '-url-error', 'Lien invalide — ex: https://...');
+          valid = false;
+        } else {
+          clearError(f, f.id + '-url-error');
+        }
+      });
+      // Cas spécifique : profil D — au moins 1 logiciel
+      if (selectedType === 'post-prod') {
+        const wrap = document.getElementById('d-logiciels-wrap');
+        const checked = wrap.querySelectorAll('input[name="d-logiciels"]:checked').length;
+        wrap.classList.remove('invalid');
+        const existing = document.getElementById('d-logiciels-error');
+        if (existing) existing.remove();
+        if (checked === 0) {
+          wrap.classList.add('invalid');
+          const errMsg = document.createElement('div');
+          errMsg.id = 'd-logiciels-error';
+          errMsg.style.cssText = 'font-family:var(--mono);font-size:9px;letter-spacing:0.15em;color:rgba(220,80,80,0.8);margin-top:6px;';
+          errMsg.textContent = 'Sélectionnez au moins un logiciel';
+          wrap.appendChild(errMsg);
+          valid = false;
+        }
+      }
+    }
+
+    return valid;
+  }
+
+  function nextStep(current) {
+    if (!validateStep(current)) return;
+    if (current === 2) buildRecap();
+    showStep(current + 1);
+  }
+  function prevStep(current) { showStep(current - 1); }
+
+  // ── RÉCAPITULATIF
+  function fieldVal(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  function checkedVals(name) {
+    return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(c => c.value).join(', ');
+  }
+
+  function buildRecap() {
+    const common = [
+      { key: 'Profil', val: TYPE_LABELS[selectedType] || '—' },
+      { key: 'Prénom', val: fieldVal('prenom') },
+      { key: 'Nom', val: fieldVal('nom') },
+      { key: 'Email', val: fieldVal('email') },
+      { key: 'Téléphone', val: fieldVal('telephone') },
+      { key: 'Âge', val: fieldVal('age') },
+      { key: 'Ville', val: fieldVal('ville') },
+    ];
+
+    const p = TYPE_PREFIX[selectedType];
+    let specific = [];
+
+    if (selectedType === 'image-son') {
+      specific = [
+        { key: 'Poste', val: fieldVal('a-poste') },
+        { key: 'Expérience', val: fieldVal('a-experience') },
+        { key: 'Matériel', val: checkedVals('a-materiel') },
+        { key: 'Showreel', val: fieldVal('a-showreel') },
+        { key: 'Productions', val: fieldVal('a-experiences') },
+        { key: 'Disponibilité', val: fieldVal('a-dispo') },
+        { key: 'Mobilité', val: fieldVal('a-mobilite') },
+        { key: 'Message', val: fieldVal('a-message') },
+      ];
+    } else if (selectedType === 'plateau') {
+      specific = [
+        { key: 'Poste', val: fieldVal('b-poste') },
+        { key: 'Expérience', val: fieldVal('b-experience') },
+        { key: 'Productions', val: fieldVal('b-productions') },
+        { key: 'Logiciels', val: checkedVals('b-logiciels') },
+        { key: 'Mobilité', val: fieldVal('b-mobilite') },
+        { key: 'Disponibilité', val: fieldVal('b-dispo') },
+        { key: 'Message', val: fieldVal('b-message') },
+      ];
+    } else if (selectedType === 'artistique') {
+      specific = [
+        { key: 'Poste', val: fieldVal('c-poste') },
+        { key: 'Expérience', val: fieldVal('c-experience') },
+        { key: 'Spécialités', val: checkedVals('c-specialites') },
+        { key: 'Portfolio', val: fieldVal('c-portfolio') },
+        { key: 'Expériences', val: fieldVal('c-experiences') },
+        { key: 'Disponibilité', val: fieldVal('c-dispo') },
+        { key: 'Mobilité', val: fieldVal('c-mobilite') },
+      ];
+    } else if (selectedType === 'post-prod') {
+      specific = [
+        { key: 'Poste', val: fieldVal('d-poste') },
+        { key: 'Expérience', val: fieldVal('d-experience') },
+        { key: 'Logiciels', val: checkedVals('d-logiciels') },
+        { key: 'Extrait', val: fieldVal('d-extrait') },
+        { key: 'Expériences', val: fieldVal('d-experiences') },
+        { key: 'Disponibilité', val: fieldVal('d-dispo') },
+        { key: 'Télétravail', val: fieldVal('d-teletravail') },
+        { key: 'Message', val: fieldVal('d-message') },
+      ];
+    } else if (selectedType === 'autre') {
+      specific = [
+        { key: 'Discipline', val: fieldVal('e-discipline') },
+        { key: 'Apport', val: fieldVal('e-apport') },
+        { key: 'Portfolio', val: fieldVal('e-portfolio') },
+        { key: 'Disponibilité', val: fieldVal('e-dispo') },
+        { key: 'Mobilité', val: fieldVal('e-mobilite') },
+      ];
+    }
+
+    const all = [...common, ...specific];
+    document.getElementById('recap-content').innerHTML = all.map(f => `
+      <div class="recap-item">
+        <div class="recap-key">${f.key}</div>
+        <div class="recap-val ${!f.val ? 'empty' : ''}">${f.val || '—'}</div>
+      </div>
+    `).join('');
+  }
+
+  // ── AUTOCOMPLÉTION VILLES (geo.api.gouv.fr)
+  const villeInput = document.getElementById('ville');
+  const villeSuggestions = document.getElementById('ville-suggestions');
+  let villeDebounce = null;
+
+  villeInput.addEventListener('input', function() {
+    const q = this.value.trim();
+    villeSuggestions.innerHTML = '';
+    villeSuggestions.style.display = 'none';
+    clearTimeout(villeDebounce);
+    if (q.length < 2) return;
+
+    villeDebounce = setTimeout(async () => {
+      try {
+        const res = await fetch(`https://geo.api.gouv.fr/communes?nom=${encodeURIComponent(q)}&fields=nom,codesPostaux&boost=population&limit=8`);
+        const data = await res.json();
+        villeSuggestions.innerHTML = '';
+        if (!data.length) { villeSuggestions.style.display = 'none'; return; }
+        data.forEach(commune => {
+          const cp = commune.codesPostaux?.[0] || '';
+          const li = document.createElement('li');
+          li.style.cssText = 'padding:10px 14px;cursor:pointer;font-family:var(--serif);font-size:0.95rem;color:#F0EEE6;border-bottom:1px solid rgba(201,168,76,0.08);display:flex;justify-content:space-between;align-items:center;gap:1rem;';
+          li.innerHTML = `<span>${commune.nom}</span><span style="font-family:var(--mono);font-size:10px;color:#C9A84C;letter-spacing:0.1em;">${cp}</span>`;
+          li.addEventListener('mouseenter', () => li.style.background = 'rgba(201,168,76,0.08)');
+          li.addEventListener('mouseleave', () => li.style.background = '');
+          li.addEventListener('mousedown', () => {
+            villeInput.value = `${commune.nom} ${cp}`;
+            villeSuggestions.style.display = 'none';
+          });
+          villeSuggestions.appendChild(li);
+        });
+        villeSuggestions.style.display = 'block';
+      } catch(e) { villeSuggestions.style.display = 'none'; }
+    }, 250);
+  });
+  document.addEventListener('click', e => {
+    if (!villeInput.contains(e.target)) villeSuggestions.style.display = 'none';
+  });
+
+  // ── DÉVERROUILLAGE BOUTON SUBMIT
+  function checkUnlock() {
+    const cguOk = document.getElementById('consent').checked;
+    const captchaOk = typeof hcaptcha !== 'undefined' && hcaptcha.getResponse().length > 0;
+    const btn = document.getElementById('btn-submit');
+    if (cguOk && captchaOk) {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.style.cursor = 'pointer';
+      btn.style.pointerEvents = 'auto';
+    } else {
+      btn.disabled = true;
+      btn.style.opacity = '0.35';
+      btn.style.cursor = 'not-allowed';
+      btn.style.pointerEvents = 'none';
+    }
+  }
+
+  // ── SOUMISSION
+  async function submitForm() {
+    const date = new Date().toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+    const typeLabel = TYPE_LABELS[selectedType] || 'Équipe';
+
+    const payload = {
+      access_key: '9cb7828a-4f4c-411f-81d5-145bc65cfe40',
+      subject: `[DJUM] Candidature Équipe ${typeLabel} — ${fieldVal('prenom')} ${fieldVal('nom')}`,
+      from_name: 'DJUMPERFORMANCE Site',
+      'Profil': typeLabel,
+      'Prénom': fieldVal('prenom'),
+      'Nom': fieldVal('nom'),
+      'Email': fieldVal('email'),
+      'Téléphone': fieldVal('telephone') || '—',
+      'Âge': fieldVal('age'),
+      'Ville': fieldVal('ville'),
+      'Date': date,
+      'Source': 'candidature-equipe'
+    };
+
+    let posteForEmail = typeLabel;
+
+    if (selectedType === 'image-son') {
+      Object.assign(payload, {
+        'Poste exact': fieldVal('a-poste'),
+        'Expérience': fieldVal('a-experience'),
+        'Matériel possédé': checkedVals('a-materiel') || '—',
+        'Showreel': fieldVal('a-showreel'),
+        'Productions': fieldVal('a-experiences') || '—',
+        'Disponibilité': fieldVal('a-dispo'),
+        'Mobilité': fieldVal('a-mobilite') || '—',
+        'Message': fieldVal('a-message') || '—'
+      });
+      posteForEmail = fieldVal('a-poste') || typeLabel;
+    } else if (selectedType === 'plateau') {
+      Object.assign(payload, {
+        'Poste exact': fieldVal('b-poste'),
+        'Expérience': fieldVal('b-experience'),
+        'Productions': fieldVal('b-productions'),
+        'Logiciels': checkedVals('b-logiciels') || '—',
+        'Mobilité': fieldVal('b-mobilite'),
+        'Disponibilité': fieldVal('b-dispo'),
+        'Message': fieldVal('b-message') || '—'
+      });
+      posteForEmail = fieldVal('b-poste') || typeLabel;
+    } else if (selectedType === 'artistique') {
+      Object.assign(payload, {
+        'Poste exact': fieldVal('c-poste'),
+        'Expérience': fieldVal('c-experience') || '—',
+        'Spécialités': checkedVals('c-specialites') || '—',
+        'Portfolio': fieldVal('c-portfolio'),
+        'Expériences': fieldVal('c-experiences') || '—',
+        'Disponibilité': fieldVal('c-dispo'),
+        'Mobilité': fieldVal('c-mobilite') || '—'
+      });
+      posteForEmail = fieldVal('c-poste') || typeLabel;
+    } else if (selectedType === 'post-prod') {
+      Object.assign(payload, {
+        'Poste exact': fieldVal('d-poste'),
+        'Expérience': fieldVal('d-experience') || '—',
+        'Logiciels maîtrisés': checkedVals('d-logiciels'),
+        'Extrait de travaux': fieldVal('d-extrait'),
+        'Expériences': fieldVal('d-experiences') || '—',
+        'Disponibilité': fieldVal('d-dispo'),
+        'Télétravail': fieldVal('d-teletravail') || '—',
+        'Message': fieldVal('d-message') || '—'
+      });
+      posteForEmail = fieldVal('d-poste') || typeLabel;
+    } else if (selectedType === 'autre') {
+      Object.assign(payload, {
+        'Discipline': fieldVal('e-discipline'),
+        'Apport': fieldVal('e-apport'),
+        'Portfolio': fieldVal('e-portfolio') || '—',
+        'Disponibilité': fieldVal('e-dispo'),
+        'Mobilité': fieldVal('e-mobilite') || '—'
+      });
+      posteForEmail = fieldVal('e-discipline') || typeLabel;
+    }
+
+    launchSaber(() => {
+      launchHyperspace(async () => {
+        try {
+          await Promise.allSettled([
+            fetch('https://api.web3forms.com/submit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify(payload)
+            }),
+            emailjs.send('service_jaj9i0q', 'template_f6lc9zh', {
+              to_name: fieldVal('prenom'),
+              to_email: fieldVal('email'),
+              email: fieldVal('email'),
+              prenom: fieldVal('prenom'),
+              nom: fieldVal('nom'),
+              poste: posteForEmail,
+              ville: fieldVal('ville'),
+              disponibilite: payload['Disponibilité'] || 'À définir',
+              date
+            })
+          ]);
+        } catch (err) {
+          console.error('[DJUM] Erreur envoi:', err);
+        } finally {
+          document.getElementById('candidature-form').style.display = 'none';
+          document.getElementById('steps-bar').classList.remove('visible');
+          document.getElementById('success-screen').classList.add('visible');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    });
+  }
+
+  // ══ ANIMATION 1 : SABRE LUMINEUX ══
+  function launchSaber(onComplete) {
+    const btn = document.getElementById('btn-submit');
+    const sc = document.getElementById('saber-canvas');
+    const rect = btn.getBoundingClientRect();
+    const pad = 10;
+    const W = rect.width + pad*2;
+    const H = rect.height + pad*2;
+    sc.width = W; sc.height = H;
+    sc.style.width = W+'px'; sc.style.height = H+'px';
+    const sctx = sc.getContext('2d');
+    const perimeter = 2*(W+H);
+    let progress = 0, start = null;
+
+    function drawSaber(t) {
+      if (!start) start = t;
+      const elapsed = t - start;
+      progress = Math.min(elapsed / 900, 1);
+      sctx.clearRect(0,0,W,H);
+      for (let trail = 3; trail >= 0; trail--) {
+        const trailProgress = Math.max(0, progress - trail * 0.07);
+        const trailDist = trailProgress * perimeter;
+        const opacity = (1 - trail/4) * (trail === 0 ? 1 : 0.4);
+        const lineWidth = trail === 0 ? 3 : 1.5 - trail*0.3;
+        sctx.beginPath();
+        sctx.strokeStyle = trail === 0 ? `rgba(201,168,76,${opacity})` : `rgba(240,220,150,${opacity})`;
+        sctx.lineWidth = lineWidth;
+        sctx.shadowBlur = trail === 0 ? 12 : 0;
+        sctx.shadowColor = 'rgba(201,168,76,0.8)';
+        sctx.lineCap = 'round';
+        let d = trailDist;
+        sctx.moveTo(pad, pad);
+        if (d <= W) { sctx.lineTo(pad+d, pad); }
+        else { sctx.lineTo(W-pad+pad, pad); d -= W;
+          if (d <= H) { sctx.lineTo(W-pad+pad, pad+d); }
+          else { sctx.lineTo(W-pad+pad, H-pad+pad); d -= H;
+            if (d <= W) { sctx.lineTo(W-pad+pad-d, H-pad+pad); }
+            else { sctx.lineTo(pad, H-pad+pad); d -= W;
+              if (d > 0) sctx.lineTo(pad, H-pad+pad - Math.min(d,H));
+            }
+          }
+        }
+        sctx.stroke();
+        sctx.shadowBlur = 0;
+      }
+      if (progress < 1) {
+        requestAnimationFrame(drawSaber);
+      } else {
+        sctx.clearRect(0,0,W,H);
+        sctx.strokeStyle = 'rgba(240,220,150,0.9)';
+        sctx.lineWidth = 2; sctx.shadowBlur = 20; sctx.shadowColor = 'rgba(201,168,76,1)';
+        sctx.strokeRect(pad, pad, W-pad*2, H-pad*2);
+        sctx.shadowBlur = 0;
+        setTimeout(() => {
+          let alpha = 1;
+          const fade = setInterval(() => {
+            alpha -= 0.08;
+            sctx.clearRect(0,0,W,H);
+            if (alpha > 0) {
+              sctx.globalAlpha = alpha;
+              sctx.strokeStyle = 'rgba(201,168,76,1)';
+              sctx.lineWidth = 2;
+              sctx.strokeRect(pad, pad, W-pad*2, H-pad*2);
+              sctx.globalAlpha = 1;
+            } else {
+              clearInterval(fade);
+              sctx.clearRect(0,0,W,H);
+              onComplete();
+            }
+          }, 30);
+        }, 200);
+      }
+    }
+    requestAnimationFrame(drawSaber);
+  }
+
+  // ══ ANIMATION 2 : HYPERESPACE ══
+  function launchHyperspace(onComplete) {
+    const overlay = document.getElementById('hyperspace-overlay');
+    const hc = document.getElementById('hyperspace-canvas');
+    overlay.classList.add('active');
+    let W = hc.width = window.innerWidth, H = hc.height = window.innerHeight;
+    const hctx = hc.getContext('2d'), cx = W/2, cy = H/2, streaks = [];
+    for (let i = 0; i < 320; i++) {
+      const a = Math.random()*Math.PI*2, sp = Math.random()*14+5, d = Math.random()*90+20;
+      streaks.push({ angle:a, speed:sp, dist:d, length:0, maxLen:Math.random()*220+60, alpha:Math.random()*0.55+0.3, gold:Math.random()<0.1 });
+    }
+    let phase = 'accel', fc = 0;
+    const _logoImg = new Image();
+    _logoImg.src = 'favicon-512.png';
+
+    function drawLogo(alpha) {
+      if (!_logoImg.complete) return;
+      hctx.save();
+      hctx.globalAlpha = alpha;
+      const size = Math.min(W, H) * 0.18;
+      hctx.drawImage(_logoImg, cx - size/2, cy - size/2, size, size);
+      hctx.restore();
+    }
+    function draw() {
+      fc++;
+      hctx.fillStyle = 'rgba(0,0,0,0.14)'; hctx.fillRect(0,0,W,H);
+      let gs = phase === 'accel' ? fc/40*3 : phase === 'hold' ? 3 : 3*(1-fc/25);
+      for (const s of streaks) {
+        s.length = Math.min(s.length + gs*s.speed*0.4, s.maxLen);
+        const x1 = cx + Math.cos(s.angle)*s.dist;
+        const y1 = cy + Math.sin(s.angle)*s.dist;
+        const x2 = cx + Math.cos(s.angle)*(s.dist + s.length*gs*0.5);
+        const y2 = cy + Math.sin(s.angle)*(s.dist + s.length*gs*0.5);
+        hctx.beginPath();
+        const g = hctx.createLinearGradient(x1,y1,x2,y2);
+        const col = s.gold ? '201,168,76' : '240,238,230';
+        g.addColorStop(0, `rgba(${col},0)`);
+        g.addColorStop(1, `rgba(${col},${s.alpha})`);
+        hctx.strokeStyle = g;
+        hctx.lineWidth = s.gold ? 1.5 : 1;
+        hctx.moveTo(x1,y1); hctx.lineTo(x2,y2); hctx.stroke();
+      }
+      const logoAlpha = phase === 'accel' ? fc/40*0.9 : phase === 'hold' ? 0.9 : 0.9*(1-fc/25);
+      drawLogo(Math.min(logoAlpha, 0.9));
+      if (phase === 'accel' && fc >= 40) { phase = 'hold'; fc = 0; }
+      else if (phase === 'hold' && fc >= 30) { phase = 'fade'; fc = 0; }
+      else if (phase === 'fade' && fc >= 25) { overlay.classList.remove('active'); hctx.clearRect(0,0,W,H); onComplete(); return; }
+      requestAnimationFrame(draw);
+    }
+    hctx.fillStyle = '#000'; hctx.fillRect(0,0,W,H);
+    requestAnimationFrame(draw);
+  }
+</script>
+</body>
+</html>

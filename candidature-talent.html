@@ -789,12 +789,23 @@
         <p class="engagement-sign">— DJUMPERFORMANCE</p>
       </div>
 
+      <div class="engagement-message" style="margin-top:1.5rem; border-color:rgba(201,168,76,0.12);">
+        <div class="engagement-star" style="font-size:1rem;">⚖</div>
+        <h3 class="engagement-title" style="font-size:1.1rem;">Données personnelles — <em>votre confiance nous engage.</em></h3>
+        <p class="engagement-body">
+          Les informations transmises sont utilisées <strong>uniquement dans le cadre de l'étude de votre candidature</strong> par DJUMPERFORMANCE. Elles ne sont ni vendues, ni partagées avec des tiers.
+        </p>
+        <p class="engagement-body">
+          Conformément au <strong>RGPD</strong>, vous disposez d'un droit d'accès, de rectification et de suppression. Pour exercer ces droits : <span style="color:var(--gold);">contact@djumperformance.com</span>
+        </p>
+      </div>
+
       <div style="margin-top:2rem; padding:1.5rem 2rem; background:var(--bg2); border:1px solid rgba(201,168,76,0.12);">
         <label class="checkbox-item" style="gap:1rem;">
           <input type="checkbox" id="consent" required onchange="checkUnlock()">
           <span class="checkbox-box"></span>
           <span style="font-family:var(--serif); font-size:0.9rem; color:var(--text-muted); line-height:1.7; cursor:pointer;">
-            J'ai lu et j'accepte les conditions de participation. Je comprends que ce projet est non rémunéré et j'y adhère librement, par amour du cinéma.
+            J'ai lu et j'accepte les conditions de participation. Je comprends que ce projet est non rémunéré et j'y adhère librement. J'accepte que mes données soient utilisées conformément au RGPD.
           </span>
         </label>
       </div>
@@ -935,6 +946,11 @@
   }
 
   function showStep(n) {
+    renderStep(n);
+    history.pushState({ step: n }, '', `?etape=${n}`);
+  }
+
+  function renderStep(n) {
     document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
     document.getElementById(`section-${n}`).classList.add('active');
 
@@ -947,6 +963,16 @@
     currentStep = n;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  // ── HISTORIQUE NAVIGATEUR
+  window.addEventListener('popstate', (e) => {
+    if (e.state && e.state.step) {
+      renderStep(e.state.step);
+    } else {
+      renderStep(1);
+    }
+  });
+  history.replaceState({ step: 1 }, '', '?etape=1');
 
   function validateStep(n) {
     const section = document.getElementById(`section-${n}`);

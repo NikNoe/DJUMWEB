@@ -5,7 +5,7 @@
 
 ---
 
-> Dernière mise à jour : 2026-05-14
+> Dernière mise à jour : 2026-05-16
 > Généré par `node scripts/update-readme.js` — relancer après tout changement structurel.
 
 ---
@@ -21,10 +21,12 @@ DJUMPERFORMANCE est une maison de production indépendante fondée sur une convi
 | Fichier | Titre | Description |
 |---|---|---|
 | `a-propos.html` | À Propos — DJUMPERFORMANCE | DJUMPERFORMANCE — À Propos. La vision derrière la maison de production. |
+| `candidature-equipe.html` | Candidature Équipe — DJUMPERFORMANCE | DJUMPERFORMANCE — Candidature Équipe. Rejoignez notre maison de production indépendante en tant que technicien·ne ou artisan·e du film. |
 | `candidature-lieu.html` | Lieu & Sponsor — DJUMPERFORMANCE | DJUMPERFORMANCE — Proposer un lieu ou devenir sponsor. |
 | `candidature-talent.html` | Candidature Talent — DJUMPERFORMANCE | DJUMPERFORMANCE — Candidature Talent. Rejoignez notre maison de production indépendante. |
 | `candidature-technique.html` | Candidature Technique — DJUMPERFORMANCE | DJUMPERFORMANCE — Candidature Équipe Technique. Son, image, montage. |
 | `index.html` | DJUMPERFORMANCE — La performance d'un rêve | DJUMPERFORMANCE — Maison de production indépendante. Courts métrages cinématiques. La performance d'un rêve. |
+| `soutenir.html` | Soutenir — DJUMPERFORMANCE | DJUMPERFORMANCE — Soutenir. Prêter un lieu, du matériel, devenir sponsor ou proposer une collaboration créative. |
 
 ---
 
@@ -50,6 +52,7 @@ DJUMPERFORMANCE est une maison de production indépendante fondée sur une convi
 │   ├── install-hooks.js
 │   └── update-readme.js
 ├── a-propos.html
+├── candidature-equipe.html
 ├── candidature-lieu.html
 ├── candidature-talent.html
 ├── candidature-technique.html
@@ -58,7 +61,8 @@ DJUMPERFORMANCE est une maison de production indépendante fondée sur une convi
 ├── favicon-32.png
 ├── favicon-512.png
 ├── favicon.ico
-└── index.html
+├── index.html
+└── soutenir.html
 ```
 
 ---

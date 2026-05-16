@@ -162,7 +162,7 @@
 
   /* ─── REJOINDRE ─── */
   #rejoindre { background: var(--bg); }
-  .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .cards-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
   .card {
     background: var(--bg2); border: 1px solid rgba(201,168,76,0.08);
     padding: 2.5rem 2rem; cursor: pointer; transition: border-color 0.3s, transform 0.3s;
@@ -198,6 +198,15 @@
   .soutenir-option-sub { font-family: var(--serif); font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem; }
   .soutenir-option-arrow { font-family: var(--mono); color: var(--gold-dim); font-size: 16px; transition: transform 0.3s; }
   .soutenir-option:hover .soutenir-option-arrow { transform: translateX(4px); color: var(--gold); }
+
+  /* ─── BOUTON OR ─── */
+  .btn-gold {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.25em;
+    background: var(--gold); color: var(--bg); border: none;
+    padding: 1rem 2.5rem; text-transform: uppercase; font-weight: 700;
+    text-decoration: none; display: inline-block; transition: opacity 0.3s, box-shadow 0.4s, transform 0.2s;
+  }
+  .btn-gold:hover { opacity: 0.85; transform: translateY(-1px); box-shadow: 0 0 16px rgba(201,168,76,0.5), 0 0 40px rgba(201,168,76,0.22); }
 
   /* ─── CONTACT ─── */
   #contact { background: var(--bg); }
@@ -269,7 +278,8 @@
     <li><a href="#univers">Univers</a></li>
     <li><a href="#projets">Projets</a></li>
     <li><a href="#rejoindre">Rejoindre</a></li>
-    <li><a href="#soutenir">Soutenir</a></li>
+    <li><a href="soutenir.html">Soutenir</a></li>
+    <li><a href="a-propos.html">À propos</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a class="nav-cta" href="#rejoindre">Candidater</a>
@@ -285,7 +295,8 @@
   <a href="#univers" onclick="closeMenu()">Univers</a>
   <a href="#projets" onclick="closeMenu()">Projets</a>
   <a href="#rejoindre" onclick="closeMenu()">Rejoindre</a>
-  <a href="#soutenir" onclick="closeMenu()">Soutenir</a>
+  <a href="soutenir.html">Soutenir</a>
+  <a href="a-propos.html">À propos</a>
   <a href="#contact" onclick="closeMenu()">Contact</a>
 </div>
 
@@ -410,17 +421,10 @@
         <span class="card-arrow">→</span>
       </a>
 
-      <a class="card" href="candidature-technique.html">
-        <span class="card-icon">02 — Équipe technique</span>
-        <h3>Son · Image · Montage</h3>
-        <p>Rejoignez une équipe en construction. Toutes les disciplines techniques sont les bienvenues pour les prochaines productions.</p>
-        <span class="card-arrow">→</span>
-      </a>
-
-      <a class="card" href="candidature-lieu.html">
-        <span class="card-icon">03 — Lieu · Sponsor</span>
-        <h3>Soutenir le projet</h3>
-        <p>Prêtez un lieu de tournage, devenez partenaire ou sponsorisez une production. Chaque soutien construit l'univers.</p>
+      <a class="card" href="candidature-equipe.html">
+        <span class="card-icon">02 — Équipe technique & artistique</span>
+        <h3>Image, son, plateau, post-prod, maquillage...</h3>
+        <p>Rejoignez une équipe en construction. Toutes les disciplines techniques et artistiques sont les bienvenues pour les prochaines productions.</p>
         <span class="card-arrow">→</span>
       </a>
 
@@ -432,42 +436,13 @@
 <section id="soutenir">
   <div class="section-inner">
     <div class="section-label">Soutenir — Support</div>
-    <div class="soutenir-grid">
-      <div class="soutenir-text">
-        <h2>Construire ensemble<br><em>quelque chose de grand.</em></h2>
-        <p>DJUMPERFORMANCE grandit avec le soutien de ceux qui croient au pouvoir du cinéma indépendant.</p>
-        <p>Que vous soyez une marque, un espace, un artiste ou simplement un passionné — il y a une place pour vous dans cette aventure.</p>
-      </div>
-      <div class="soutenir-options">
-        <a class="soutenir-option" href="#contact">
-          <div>
-            <div class="soutenir-option-label">Devenir sponsor</div>
-            <div class="soutenir-option-sub">Associez votre marque à nos productions</div>
-          </div>
-          <span class="soutenir-option-arrow">→</span>
-        </a>
-        <a class="soutenir-option" href="candidature-lieu.html">
-          <div>
-            <div class="soutenir-option-label">Prêter un lieu</div>
-            <div class="soutenir-option-sub">Mettez à disposition votre espace pour un tournage</div>
-          </div>
-          <span class="soutenir-option-arrow">→</span>
-        </a>
-        <a class="soutenir-option" href="#contact">
-          <div>
-            <div class="soutenir-option-label">Partenariat créatif</div>
-            <div class="soutenir-option-sub">Collaboration artistique ou technique</div>
-          </div>
-          <span class="soutenir-option-arrow">→</span>
-        </a>
-        <a class="soutenir-option" href="#contact">
-          <div>
-            <div class="soutenir-option-label">Autre proposition</div>
-            <div class="soutenir-option-sub">Parlez-nous de votre idée</div>
-          </div>
-          <span class="soutenir-option-arrow">→</span>
-        </a>
-      </div>
+    <div class="soutenir-text" style="text-align:center; max-width:720px; margin:0 auto;">
+      <h2>Construire ensemble<br><em>quelque chose de grand.</em></h2>
+      <p>DJUMPERFORMANCE grandit avec le soutien de ceux qui croient au pouvoir du cinéma indépendant.</p>
+      <p>Que vous soyez une marque, un espace, un artiste ou simplement un passionné — il y a une place pour vous dans cette aventure.</p>
+    </div>
+    <div style="text-align:center; margin-top:3rem;">
+      <a class="btn-gold" href="soutenir.html">Soutenir DJUMPERFORMANCE →</a>
     </div>
   </div>
 </section>
@@ -476,69 +451,48 @@
 <section id="contact">
   <div class="section-inner">
     <div class="section-label">Contact</div>
-    <div class="contact-grid">
-      <div class="contact-info">
-        <h2>Parlons de<br><em>votre projet.</em></h2>
-        <p>Pour toute question, collaboration ou prise de contact directe — écrivez-nous. Chaque message est lu.</p>
-        <div class="social-links">
+    <div class="contact-info" style="text-align:center; max-width:720px; margin:0 auto;">
+      <h2>Parlons de<br><em>votre projet.</em></h2>
+      <p>Pour toute question, collaboration ou prise de contact directe — écrivez-nous. Chaque message est lu.</p>
+      <div class="social-links" style="align-items:center;">
 
-          <a class="social-link" href="https://www.instagram.com/justdjum?igsh=Z2FhcDdwaHFiNHlj" target="_blank" rel="noopener">
-            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5.5"/>
-              <circle cx="12" cy="12" r="4.5"/>
-              <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
-            </svg>
-            Instagram
-          </a>
+        <a class="social-link" href="https://www.instagram.com/justdjum?igsh=Z2FhcDdwaHFiNHlj" target="_blank" rel="noopener">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5.5"/>
+            <circle cx="12" cy="12" r="4.5"/>
+            <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/>
+          </svg>
+          Instagram
+        </a>
 
-          <a class="social-link" href="https://youtube.com/@djumperformance?si=x1jL27dJNmTPMySI" target="_blank" rel="noopener">
-            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="5" width="20" height="14" rx="4"/>
-              <path d="M10 9.5L15 12L10 14.5V9.5Z" fill="currentColor" stroke="none"/>
-            </svg>
-            YouTube
-          </a>
+        <a class="social-link" href="https://youtube.com/@djumperformance?si=x1jL27dJNmTPMySI" target="_blank" rel="noopener">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="4"/>
+            <path d="M10 9.5L15 12L10 14.5V9.5Z" fill="currentColor" stroke="none"/>
+          </svg>
+          YouTube
+        </a>
 
-          <a class="social-link" href="https://www.tiktok.com/@djumperformance?_r=1&_t=ZN-95VSk4CAZwE" target="_blank" rel="noopener">
-            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
-            </svg>
-            TikTok
-          </a>
+        <a class="social-link" href="https://www.tiktok.com/@djumperformance?_r=1&_t=ZN-95VSk4CAZwE" target="_blank" rel="noopener">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+          </svg>
+          TikTok
+        </a>
 
-          <a class="social-link" href="mailto:contact@djumperformance.com">
-            <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="5" width="20" height="14" rx="3"/>
-              <path d="M2 8l10 7 10-7"/>
-            </svg>
-            contact@djumperformance.com
-          </a>
+        <a class="social-link" href="mailto:contact@djumperformance.com">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="3"/>
+            <path d="M2 8l10 7 10-7"/>
+          </svg>
+          contact@djumperformance.com
+        </a>
 
-        </div>
       </div>
-      <form
-        class="contact-form"
-        action="https://formspree.io/f/VOTRE_ID_FORMSPREE"
-        method="POST"
-      >
-        <div class="form-group">
-          <label class="form-label" for="nom">Nom complet</label>
-          <input class="form-input" type="text" id="nom" name="nom" placeholder="Votre nom" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="email">Email</label>
-          <input class="form-input" type="email" id="email" name="email" placeholder="votre@email.com" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="sujet">Sujet</label>
-          <input class="form-input" type="text" id="sujet" name="sujet" placeholder="Collaboration, question, autre...">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="message">Message</label>
-          <textarea class="form-textarea" id="message" name="message" placeholder="Votre message..." required></textarea>
-        </div>
-        <button class="form-submit" type="submit">Envoyer →</button>
-      </form>
+
+      <div style="margin-top:3rem;">
+        <a class="btn-gold" href="a-propos.html">Découvrir DJUMPERFORMANCE →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -550,6 +504,8 @@
     <a href="#accueil">Accueil</a>
     <a href="#projets">Projets</a>
     <a href="#rejoindre">Rejoindre</a>
+    <a href="soutenir.html">Soutenir</a>
+    <a href="a-propos.html">À propos</a>
     <a href="#contact">Contact</a>
   </div>
 </footer>
